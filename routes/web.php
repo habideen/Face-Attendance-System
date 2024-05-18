@@ -24,3 +24,4 @@ Route::get('/collections', [AttendanceController::class, 'collections']);
 Route::post('/enroll', [AttendanceController::class, 'enroll']);
 Route::post('/check-attendance', [AttendanceController::class, 'checkAttendance']);
 Route::get('/collections/faces/delete', [AttendanceController::class, 'deleteFace']);
+Route::get('/collections/delete/{collectionId}', [AttendanceController::class, 'deleteCollection']);

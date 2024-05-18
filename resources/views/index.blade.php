@@ -10,7 +10,7 @@
 
 <body>
     <div class="container mt-5">
-        <h2 class="my-4">>Face Recognition Attendance System</h2>
+        <h2 class="my-4">Face Recognition Attendance System</h2>
 
         <div>
             <a href="/" class="btn btn-primary mb-3">Enroll & Check Attendance</a> |

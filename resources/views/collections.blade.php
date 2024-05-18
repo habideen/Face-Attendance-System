@@ -23,6 +23,7 @@
                 <li class="list-group-item">
                     <div>
                         <strong>Collection ID:</strong> {{ $collection['CollectionId'] }}
+                        <a href="/collections/delete/{{ $collection['CollectionId'] }}">Delete</a>
                     </div>
                     <div>
                         <strong>Number of Faces:</strong> {{ $collection['FaceCount'] }}

@@ -90,4 +90,16 @@ class AttendanceController extends Controller
             return response()->json(['error' => 'Failed to delete faces from collection.'], 500);
         }
     }
+
+    public function deleteCollection($collectionId)
+    {
+        $result = $this->rekognition->deleteCollection($collectionId);
+
+        // Handle the result accordingly
+        if ($result['@metadata']['statusCode'] == 200) {
+            return response()->json(['success' => 'Collection deleted successfully.']);
+        } else {
+            return response()->json(['error' => 'Failed to delete collection.']);
+        }
+    }
 }
