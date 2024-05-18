@@ -50,4 +50,23 @@ class RekognitionService
       'CollectionId' => $collectionId,
     ]);
   }
+
+  public function listCollections()
+  {
+    return $this->rekognition->listCollections();
+  }
+
+  public function describeCollection($collectionId)
+  {
+    return $this->rekognition->describeCollection([
+      'CollectionId' => $collectionId,
+    ]);
+  }
+
+  public function listFaces($collectionId)
+  {
+    return $this->rekognition->listFaces([
+      'CollectionId' => $collectionId,
+    ]);
+  }
 }

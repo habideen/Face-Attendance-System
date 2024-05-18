@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Face Recognition Attendance</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
     <div class="container mt-5">
-        <h2 class="mb-4">Face Recognition Attendance System</h2>
+        <h2 class="my-4">>Face Recognition Attendance System</h2>
+
+        <div>
+            <a href="/" class="btn btn-primary mb-3">Enroll & Check Attendance</a> |
+            <a href="/collections" class="btn btn-primary mb-3">View Collections</a>
+        </div>
 
         @if (session('enrollStatus'))
             <div class="alert alert-success">
@@ -59,4 +66,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -15,9 +15,28 @@ class AttendanceController extends Controller
         $this->rekognition = $rekognition;
     }
 
-    public function index()
+    public function enrolCheck()
     {
         return view('index');
+    }
+
+    public function collections()
+    {
+        $collections = $this->rekognition->listCollections()['CollectionIds'];
+
+        $collectionData = [];
+        foreach ($collections as $collectionId) {
+            $collectionDetails = $this->rekognition->describeCollection($collectionId);
+            $faces = $this->rekognition->listFaces($collectionId)['Faces'];
+            $collectionData[] = [
+                'CollectionId' => $collectionId,
+                'FaceCount' => count($faces),
+                'Faces' => $faces
+            ];
+        }
+        $collectionData;
+
+        return view('collections', ['collections' => $collectionData]);
     }
 
     public function enroll(Request $request)
@@ -31,7 +50,7 @@ class AttendanceController extends Controller
 
         $this->rekognition->createCollection($collectionId);
         $result = $this->rekognition->indexFaces($image, $collectionId);
-        
+
         return response()->json($result);
     }
 
