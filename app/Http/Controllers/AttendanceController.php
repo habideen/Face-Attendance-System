@@ -48,10 +48,14 @@ class AttendanceController extends Controller
         $image = file_get_contents($request->file('image')->getRealPath());
         $collectionId = 'attendance_collection';
 
-        // $this->rekognition->createCollection($collectionId);
-        $result = $this->rekognition->indexFaces($image, $collectionId);
+        // $this->rekognition->createCollection($collectionId); // create new collection
+        $faceId = $this->rekognition->indexFaces($image, $collectionId);
 
-        return response()->json($result);
+        if ($faceId !== null) {
+            return response()->json(['faceId' => $faceId]);
+        } else {
+            return response()->json(['error' => 'No face was indexed.'], 400);
+        }
     }
 
     public function checkAttendance(Request $request)

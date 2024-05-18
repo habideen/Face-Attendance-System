@@ -22,7 +22,7 @@ class RekognitionService
 
   public function indexFaces($image, $collectionId)
   {
-    return $this->rekognition->indexFaces([
+    $result = $this->rekognition->indexFaces([
       'CollectionId' => $collectionId,
       'Image' => [
         'Bytes' => $image,
@@ -30,6 +30,12 @@ class RekognitionService
       'ExternalImageId' => uniqid(),
       'DetectionAttributes' => ['ALL'],
     ]);
+
+    if (!empty($result['FaceRecords'])) {
+      return $result['FaceRecords'][0]['Face']['FaceId'];
+    } else {
+      return null;
+    }
   }
 
   public function searchFacesByImage($image, $collectionId)
