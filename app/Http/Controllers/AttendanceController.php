@@ -48,7 +48,7 @@ class AttendanceController extends Controller
         $image = file_get_contents($request->file('image')->getRealPath());
         $collectionId = 'attendance_collection';
 
-        $this->rekognition->createCollection($collectionId);
+        // $this->rekognition->createCollection($collectionId);
         $result = $this->rekognition->indexFaces($image, $collectionId);
 
         return response()->json($result);
@@ -69,6 +69,21 @@ class AttendanceController extends Controller
             return response()->json(['status' => 'Present', 'data' => $result['FaceMatches']]);
         } else {
             return response()->json(['status' => 'Absent']);
+        }
+    }
+
+    public function deleteFace(Request $request)
+    {
+        $collectionId = $request->collection;
+        $faceIds = $request->face_id;
+
+        $result = $this->rekognition->deleteFaces($collectionId, [$faceIds]);
+
+        // Handle the result accordingly
+        if ($result['@metadata']['statusCode'] == 200) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => 'Failed to delete faces from collection.'], 500);
         }
     }
 }

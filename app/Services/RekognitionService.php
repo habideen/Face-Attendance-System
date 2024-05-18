@@ -69,4 +69,12 @@ class RekognitionService
       'CollectionId' => $collectionId,
     ]);
   }
+
+  public function deleteFaces($collectionId, $faceIds)
+  {
+    return $this->rekognition->deleteFaces([
+      'CollectionId' => $collectionId,
+      'FaceIds' => $faceIds,
+    ]);
+  }
 }

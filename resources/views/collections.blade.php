@@ -17,7 +17,7 @@
             <a href="/" class="btn btn-primary mb-3">Enroll & Check Attendance</a> |
             <a href="/collections" class="btn btn-primary mb-3">View Collections</a>
         </div>
-        
+
         <ul class="list-group">
             @foreach ($collections as $collection)
                 <li class="list-group-item">
@@ -31,7 +31,9 @@
                         <strong>Faces:</strong>
                         <ol class="">
                             @foreach ($collection['Faces'] as $face)
-                                <li>{{ $face['FaceId'] }}</li>
+                                <li>{{ $face['FaceId'] }} <a
+                                        href="/collections/faces/delete?collection={{ $collection['CollectionId'] }}&face_id={{ $face['FaceId'] }}">Delete</a>
+                                </li>
                             @endforeach
                         </ol>
                     </div>
