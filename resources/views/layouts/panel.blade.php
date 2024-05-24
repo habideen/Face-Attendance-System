@@ -18,7 +18,7 @@
     <!-- App Css-->
     <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
-    @yield('style')
+    @yield('css')
 
 </head>
 

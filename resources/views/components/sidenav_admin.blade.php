@@ -25,7 +25,7 @@
                         <li><a href="/{{ $accountType }}/courses/load_course" key="t-load_course">Load courses with
                                 file</a></li>
                         <li><a href="/{{ $accountType }}/courses/add_course" key="t-add_course">Add course</a></li>
-                        <li><a href="/{{ $accountType }}/courses/view_course" key="t-view_course">View courses</a></li>
+                        <li><a href="/{{ $accountType }}/courses" key="t-view_course">View courses</a></li>
                     </ul>
                 </li>
 
