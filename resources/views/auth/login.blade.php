@@ -82,6 +82,11 @@
                                     </div>
 
                                     <div class="mt-4 d-grid">
+                                        <a class="btn btn-primary waves-effect waves-light" type="submit"
+                                            href="/student">Student Panel</a>
+                                    </div>
+
+                                    <div class="mt-4 d-grid">
                                         <button class="btn btn-primary waves-effect waves-light disabled" type="submit">Log
                                             In</button>
                                     </div>

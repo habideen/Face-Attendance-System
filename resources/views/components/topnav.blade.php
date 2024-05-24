@@ -13,7 +13,7 @@
             <img src="/assets/images/logo.png" alt="" height="22">
           </span>
           <span class="logo-lg">
-            <img src="/visitor/assets/images/logo/panelLogo.svg" alt="" height="60">
+            <img src="/assets/images/logoWithText.png" alt="" height="60">
           </span>
         </a>
       </div>

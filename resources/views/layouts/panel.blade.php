@@ -7,24 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- icons & favicons -->
-    <link rel="shortcut icon" type="image/x-icon" href="/visitor/assets/images/favicon/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico" />
     <!-- this icon shows in browser toolbar -->
-    <link rel="icon" type="image/x-icon" href="/visitor/assets/images/favicon/favicon.ico" />
-    <!-- this icon shows in browser toolbar -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/visitor/assets/images/favicon/apple-icon-57x57.png" />
-    <link rel="apple-touch-icon" sizes="60x60" href="/visitor/assets/images/favicon/apple-icon-60x60.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="/visitor/assets/images/favicon/apple-icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/visitor/assets/images/favicon/apple-icon-76x76.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="/visitor/assets/images/favicon/apple-icon-114x114.png" />
-    <link rel="apple-touch-icon" sizes="120x120" href="/visitor/assets/images/favicon/apple-icon-120x120.png" />
-    <link rel="apple-touch-icon" sizes="144x144" href="/visitor/assets/images/favicon/apple-icon-144x144.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="/visitor/assets/images/favicon/apple-icon-152x152.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/visitor/assets/images/favicon/apple-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192"
-        href="/visitor/assets/images/favicon/android-icon-192x192.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/visitor/assets/images/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="/visitor/assets/images/favicon/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/visitor/assets/images/favicon/favicon-16x16.png" />
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
 
     <!-- Bootstrap Css -->
     <link href="/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -47,10 +32,8 @@
         <x-topnav />
 
         <!-- ========== Left Sidebar Start ========== -->
-        @if (Request::segment(1) == 'member')
-            <x-sidenav_member />
-        @elseif (Request::segment(1) == 'finance')
-            <x-sidenav_finance />
+        @if (Request::segment(1) == 'admin')
+            <x-sidenav_admin />
         @endif
         <!-- Left Sidebar End -->
 
