@@ -17,7 +17,7 @@ class AttendanceController extends Controller
 
     public function enrolCheck()
     {
-        return view('index');
+        return view('test.index');
     }
 
     public function collections()
@@ -36,7 +36,7 @@ class AttendanceController extends Controller
         }
         $collectionData;
 
-        return view('collections', ['collections' => $collectionData]);
+        return view('test.collections', ['collections' => $collectionData]);
     }
 
     public function enroll(Request $request)

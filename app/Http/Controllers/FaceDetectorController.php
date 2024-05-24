@@ -8,6 +8,6 @@ class FaceDetectorController extends Controller
 {
     public function index()
     {
-        return view('capture');
+        return view('test.capture');
     }
 }

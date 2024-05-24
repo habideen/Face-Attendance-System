@@ -73,7 +73,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
-    <script src="script.js"></script>
+    <script src="/test/script.js"></script>
 </body>
 
 </html>
