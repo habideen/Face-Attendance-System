@@ -16,6 +16,17 @@
                         <span key="t-dashboard">Dashboards</span>
                     </a>
                 </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-book"></i>
+                        <span key="t-funds">Courses</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/{{ $accountType }}/load_course" key="t-fund_set">Load courses with file</a></li>
+                        <li><a href="/{{ $accountType }}/add_course" key="t-fund_set">Add course</a></li>
+                        <li><a href="/{{ $accountType }}/view_course" key="t-fund_set">View courses</a></li>
+                    </ul>
+                </li>
 
                 <li class="menu-title" key="t-pages">Settings</li>
                 <li>
