@@ -28,6 +28,12 @@
                         <li><a href="/{{ $accountType }}/courses" key="t-view_course">View courses</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="/{{ $accountType }}/session" class="waves-effect">
+                        <i class="bx bx-timer"></i>
+                        <span key="t-profile">Set Session</span>
+                    </a>
+                </li>
 
                 <li class="menu-title" key="t-pages">Settings</li>
                 <li>

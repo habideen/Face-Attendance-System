@@ -30,7 +30,7 @@
                         <div class="card-body">
                             <x-alert />
 
-                            <form method="post">
+                            <form method="get">
                                 @csrf
 
                                 <div class="row mb-4">

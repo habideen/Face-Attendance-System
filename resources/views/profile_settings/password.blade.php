@@ -30,7 +30,7 @@
             <div class="card-body">
               <x-alert />
 
-              <form method="post">
+              <form method="get">
                 @csrf
 
                 <x-form.input name="current_password" label="Current Password" type="password" required
