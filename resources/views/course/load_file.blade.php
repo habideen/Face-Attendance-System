@@ -30,6 +30,12 @@
                         <div class="card-body">
                             <x-alert />
 
+                            <div class="d-flex mb-5">
+                                <div class="ms-auto">
+                                    <a href="/file_structure/upload_course">Download Sample File</a>
+                                </div>
+                            </div>
+
                             <form method="get">
                                 @csrf
 

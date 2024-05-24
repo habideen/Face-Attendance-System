@@ -1,12 +1,10 @@
 <?php
 
+use App\Http\Controllers\Course\AddCourseController;
 use App\Http\Controllers\Course\CoursesController;
 use App\Http\Controllers\Course\LoadCourseController;
 use App\Http\Controllers\ProfileSettings\PasswordController;
 use App\Http\Controllers\ProfileSettings\ProfileController;
-use App\Http\Controllers\web\AuthController;
-use App\Http\Controllers\web\MemberController;
-use App\Http\Controllers\web\SharedController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +26,7 @@ Route::prefix('admin')->group(function () {
 
   Route::prefix('courses')->group(function () {
     Route::get('/', [CoursesController::class, 'index']);
+    Route::get('add_course', [AddCourseController::class, 'index']);
     Route::get('load_course', [LoadCourseController::class, 'index']);
     Route::get('details/{course_code}', [CoursesController::class, 'details']);
   });
