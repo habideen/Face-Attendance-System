@@ -28,7 +28,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row fw-bold mb-4 bg-light p-2 rounded">
+                            <div class="row fw-bold mb-4 bg-light p-2 pt-3 rounded">
                                 <div class="col-md-4 mb-2">CSC501</div>
                                 <div class="col-md-4 mb-2">Introduction to Networking</div>
                                 <div class="col-md-4 mb-2">Total classes: 21</div>
