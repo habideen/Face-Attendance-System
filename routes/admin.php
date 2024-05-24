@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Course\LoadCourseController;
 use App\Http\Controllers\ProfileSettings\PasswordController;
 use App\Http\Controllers\ProfileSettings\ProfileController;
 use App\Http\Controllers\web\AuthController;
@@ -23,4 +24,8 @@ Route::prefix('admin')->group(function () {
 
   Route::get('profile', [ProfileController::class, 'index']);
   Route::get('password', [PasswordController::class, 'index']);
+
+  Route::prefix('courses')->group(function () {
+    Route::get('load_course', [LoadCourseController::class, 'index']);
+  });
 });

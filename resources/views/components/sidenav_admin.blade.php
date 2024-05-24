@@ -22,9 +22,10 @@
                         <span key="t-funds">Courses</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/{{ $accountType }}/load_course" key="t-fund_set">Load courses with file</a></li>
-                        <li><a href="/{{ $accountType }}/add_course" key="t-fund_set">Add course</a></li>
-                        <li><a href="/{{ $accountType }}/view_course" key="t-fund_set">View courses</a></li>
+                        <li><a href="/{{ $accountType }}/courses/load_course" key="t-load_course">Load courses with
+                                file</a></li>
+                        <li><a href="/{{ $accountType }}/courses/add_course" key="t-add_course">Add course</a></li>
+                        <li><a href="/{{ $accountType }}/courses/view_course" key="t-view_course">View courses</a></li>
                     </ul>
                 </li>
 
