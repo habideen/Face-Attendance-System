@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Course\AddCourseController;
+use App\Http\Controllers\Course\AttendanceController;
 use App\Http\Controllers\Course\CoursesController;
 use App\Http\Controllers\Course\LoadCourseController;
 use App\Http\Controllers\ProfileSettings\PasswordController;
@@ -29,5 +30,7 @@ Route::prefix('admin')->group(function () {
     Route::get('add_course', [AddCourseController::class, 'index']);
     Route::get('load_course', [LoadCourseController::class, 'index']);
     Route::get('details/{course_code}', [CoursesController::class, 'details']);
+    Route::get('attendance/{id}', [AttendanceController::class, 'index']);
+    Route::get('attendance/summary/{course_code}', [AttendanceController::class, 'index']);
   });
 });

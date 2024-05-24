@@ -77,8 +77,8 @@
                                     <tr>
                                         <td>25 May, 2024</td>
                                         <td>11:51 PM</td>
-                                        <td><a href="/{{ Request::segment(1) }}/courses/details/98aa7373-4167-4d69-bf4e-05383774968e"
-                                                class="btn btn-light btn-sm">View list</a></td>
+                                        <td><a href="/{{ Request::segment(1) }}/courses/attendance/98aa7373-4167-4d69-bf4e-05383774968e"
+                                                class="btn btn-light btn-sm">View attendance</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -90,7 +90,9 @@
                         <div class="card-body">
                             <h4 class="card-title mb-5">Take Action</h4>
                             <button class="btn btn-danger me-4">Delete Course</button>
-                            <button class="btn btn-primary">Edit Course</button>
+                            <button class="btn btn-primary me-4">Edit Course</button>
+                            <a href="/{{ Request::segment(1) }}/courses/attendance/summary/CSC501" class="btn btn-success">View
+                                Attendance Summary</a>
                         </div>
                     </div>
                 </div>
