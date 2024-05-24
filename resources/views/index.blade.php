@@ -14,7 +14,8 @@
 
         <div>
             <a href="/" class="btn btn-primary mb-3">Enroll & Check Attendance</a> |
-            <a href="/collections" class="btn btn-primary mb-3">View Collections</a>
+            <a href="/collections" class="btn btn-primary mb-3">View Collections</a> |
+            <a href="/capture_face" class="btn btn-primary mb-3">Capture Face</a>
         </div>
 
         @if (session('enrollStatus'))

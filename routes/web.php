@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\FaceDetectorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,5 @@ Route::post('/enroll', [AttendanceController::class, 'enroll']);
 Route::post('/check-attendance', [AttendanceController::class, 'checkAttendance']);
 Route::get('/collections/faces/delete', [AttendanceController::class, 'deleteFace']);
 Route::get('/collections/delete/{collectionId}', [AttendanceController::class, 'deleteCollection']);
+
+Route::get('/capture_face', [FaceDetectorController::class, 'index']);
