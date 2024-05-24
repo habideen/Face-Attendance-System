@@ -15,6 +15,6 @@ class AttendanceController extends Controller
 
     public function summary()
     {
-        return view('course.attendance');
+        return view('course.attendance_summary');
     } //summary
 }

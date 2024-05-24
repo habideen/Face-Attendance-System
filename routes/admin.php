@@ -31,6 +31,6 @@ Route::prefix('admin')->group(function () {
     Route::get('load_course', [LoadCourseController::class, 'index']);
     Route::get('details/{course_code}', [CoursesController::class, 'details']);
     Route::get('attendance/{id}', [AttendanceController::class, 'index']);
-    Route::get('attendance/summary/{course_code}', [AttendanceController::class, 'index']);
+    Route::get('attendance/summary/{course_code}', [AttendanceController::class, 'summary']);
   });
 });
