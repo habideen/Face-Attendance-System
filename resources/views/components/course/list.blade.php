@@ -40,7 +40,6 @@
                                             <th>View</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         <tr>
                                             <td>CSC 501</td>
