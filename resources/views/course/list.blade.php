@@ -45,7 +45,7 @@
                                             <td>CSC 501</td>
                                             <td>Computer Appreciation</td>
                                             <td>17</td>
-                                            <td><a href="/{{ Request::segment(1) }}/details"
+                                            <td><a href="/{{ Request::segment(1) }}/courses/details/98aa7373-4167-4d69-bf4e-05383774968e"
                                                     class="btn btn-light btn-sm">View</a></td>
                                         </tr>
                                     </tbody>
