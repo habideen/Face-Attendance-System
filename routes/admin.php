@@ -12,6 +12,7 @@ use App\Http\Controllers\Staff\LoadStaffController;
 use App\Http\Controllers\Staff\StaffController;
 use App\Http\Controllers\Student\AddStudentController;
 use App\Http\Controllers\Student\LoadStudentController;
+use App\Http\Controllers\Student\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,7 +51,7 @@ Route::prefix('admin')->group(function () {
   });
 
   Route::prefix('students')->group(function () {
-    Route::get('/', [StaffController::class, 'index']);
+    Route::get('/', [StudentController::class, 'index']);
     Route::get('add_student', [AddStudentController::class, 'index']);
     Route::get('load_student', [LoadStudentController::class, 'index']);
     Route::get('details/{staff_id}', [StaffController::class, 'details']);
