@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileSettings\ProfileController;
 use App\Http\Controllers\Settings\SessionController;
 use App\Http\Controllers\Staff\AddStaffController;
 use App\Http\Controllers\Staff\LoadStaffController;
+use App\Http\Controllers\Staff\StaffController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,9 +41,9 @@ Route::prefix('admin')->group(function () {
   });
 
   Route::prefix('staff')->group(function () {
-    Route::get('/', [CoursesController::class, 'index']);
+    Route::get('/', [StaffController::class, 'index']);
     Route::get('add_staff', [AddStaffController::class, 'index']);
     Route::get('load_staff', [LoadStaffController::class, 'index']);
-    Route::get('details/{staff_id}', [CoursesController::class, 'details']);
+    Route::get('details/{staff_id}', [StaffController::class, 'details']);
   });
 });

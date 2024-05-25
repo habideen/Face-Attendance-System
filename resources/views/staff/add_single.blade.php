@@ -66,7 +66,7 @@
                                     <div class="row mb-4">
                                         <x-form.select name="department" label="Department" required='true'
                                             parentClass="mb-3 col-sm-6 col-md-6 col-lg-5" optionsType="array"
-                                            :options="['No', 'Yes']" />
+                                            :options="['None', 'Computer Science', 'Electrical/Electronics']" />
                                         <x-form.input name="id" label="ID No." type="text" required='true'
                                             parentClass="mb-3 col-sm-6 col-md-3" placeholder="e.g CSC/1950/001" />
                                     </div>
