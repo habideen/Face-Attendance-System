@@ -19,13 +19,25 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-book"></i>
-                        <span key="t-funds">Courses</span>
+                        <span key="t-courses">Courses</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="/{{ $accountType }}/courses/load_course" key="t-load_course">Load courses with
                                 file</a></li>
                         <li><a href="/{{ $accountType }}/courses/add_course" key="t-add_course">Add course</a></li>
                         <li><a href="/{{ $accountType }}/courses" key="t-view_course">View courses</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bxs-user-badge"></i>
+                        <span key="t-staff">Staff</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/{{ $accountType }}/staff/load_staff" key="t-load_staff">Load staff with
+                                file</a></li>
+                        <li><a href="/{{ $accountType }}/staff/add_staff" key="t-add_staff">Add staff</a></li>
+                        <li><a href="/{{ $accountType }}/staff" key="t-view_staff">View staff</a></li>
                     </ul>
                 </li>
                 <li>
