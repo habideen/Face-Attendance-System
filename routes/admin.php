@@ -54,6 +54,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [StudentController::class, 'index']);
     Route::get('add_student', [AddStudentController::class, 'index']);
     Route::get('load_student', [LoadStudentController::class, 'index']);
-    Route::get('details/{staff_id}', [StaffController::class, 'details']);
+    Route::get('details/{staff_id}', [StudentController::class, 'details']);
   });
 });

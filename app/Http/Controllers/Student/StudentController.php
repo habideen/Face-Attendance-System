@@ -11,4 +11,9 @@ class StudentController extends Controller
     {
         return view('student.list');
     } //index
+
+    public function details()
+    {
+        return view('student.details');
+    } //details
 }

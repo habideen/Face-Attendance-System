@@ -50,7 +50,7 @@
                                             <td>CSC/2019/###</td>
                                             <td>SALAMI Kilanko Lasisi</td>
                                             <td>Computer Science</td>
-                                            <td><a href="/{{ Request::segment(1) }}/student/details/98aa7373-4167-4d69-bf4e-05383774968e"
+                                            <td><a href="/{{ Request::segment(1) }}/students/details/98aa7373-4167-4d69-bf4e-05383774968e"
                                                     class="btn btn-light btn-sm">View</a></td>
                                         </tr>
                                     </tbody>
