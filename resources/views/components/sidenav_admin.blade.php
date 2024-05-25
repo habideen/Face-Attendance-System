@@ -41,6 +41,18 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bxs-user"></i>
+                        <span key="t-student">Student</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/{{ $accountType }}/students/load_student" key="t-load_student">Load students with
+                                file</a></li>
+                        <li><a href="/{{ $accountType }}/students/add_student" key="t-add_student">Add student</a></li>
+                        <li><a href="/{{ $accountType }}/students" key="t-view_student">View studnent</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a href="/{{ $accountType }}/session" class="waves-effect">
                         <i class="bx bx-timer"></i>
                         <span key="t-profile">Set Session</span>
