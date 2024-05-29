@@ -88,10 +88,12 @@
                                         <td>Computer Appreciation</td>
                                         <td>17</td>
                                         <td>
-                                            <button class="btn btn-light btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#disableModal">Disable</button>
-                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#deleteCourseModal">Delete</button>
+                                            @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+                                                <button class="btn btn-light btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#disableModal">Disable</button>
+                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteCourseModal">Delete</button>
+                                            @endif
                                             <a href="/{{ Request::segment(1) }}/courses/details/98aa7373-4167-4d69-bf4e-05383774968e?data_table_search=Prof AKINRINDE Olakilekun Ajanlekoko"
                                                 class="btn btn-primary btn-sm">Attendance</a>
                                         </td>
@@ -101,20 +103,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title mb-5">Take Action</h4>
-                            <button class="btn btn-danger me-4 mb-3" data-bs-toggle="modal"
-                                data-bs-target="#deleteUserModal">Delete User</button>
-                            <button class="btn btn-primary me-4 mb-3" data-bs-toggle="modal"
-                                data-bs-target="#userRoleModal">Update Role</button>
-                            <a href="/{{ Request::segment(1) }}/courses/attendance/summary/CSC501"
-                                class="btn btn-success mb-3">View
-                                Attendance Summary</a>
+                @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title mb-5">Take Action</h4>
+                                <button class="btn btn-danger me-4 mb-3" data-bs-toggle="modal"
+                                    data-bs-target="#deleteUserModal">Delete User</button>
+                                <button class="btn btn-primary me-4 mb-3" data-bs-toggle="modal"
+                                    data-bs-target="#userRoleModal">Update Role</button>
+                                <a href="/{{ Request::segment(1) }}/courses/attendance/summary/CSC501"
+                                    class="btn btn-success mb-3">View
+                                    Attendance Summary</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
             <!-- row -->
             <!-- card -->
@@ -123,57 +127,59 @@
     </div>
     <!-- End Page-content -->
 
-    <!-- Static Backdrop Modal -->
-    <div class="modal fade" id="disableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        role="dialog" aria-labelledby="disableModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="disableModalLabel">Disable Staff Course</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="get" class="mt-5 mb-3">
-                        @csrf
+    @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+        <!-- Static Backdrop Modal -->
+        <div class="modal fade" id="disableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            role="dialog" aria-labelledby="disableModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="disableModalLabel">Disable Staff Course</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="get" class="mt-5 mb-3">
+                            @csrf
 
-                        <input type="hidden" name="course_id" id="course_id">
-                        <p class="h4 f-12 text-center">Are you sure you want to disable <span id="course">Computer
-                                Science</span> for this lecture?</p>
+                            <input type="hidden" name="course_id" id="course_id">
+                            <p class="h4 f-12 text-center">Are you sure you want to disable <span id="course">Computer
+                                    Science</span> for this lecture?</p>
 
-                        <div class="text-center mt-5">
-                            <x-form.button defaultText="Disable" class="btn-lg btn-danger" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Static Backdrop Modal -->
-    <div class="modal fade" id="deleteCourseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        role="dialog" aria-labelledby="deleteCourseModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteCourseModalLabel">Delete Staff Course</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="get" class="mt-5 mb-3">
-                        @csrf
-
-                        <input type="hidden" name="course_id" id="course_id">
-                        <p class="h4 f-12 text-center">Are you sure you want to delete <span id="course">Computer
-                                Science</span> for this lecture?</p>
-
-                        <div class="text-center mt-5">
-                            <x-form.button defaultText="Delete" class="btn-lg btn-danger" />
-                        </div>
-                    </form>
+                            <div class="text-center mt-5">
+                                <x-form.button defaultText="Disable" class="btn-lg btn-danger" />
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Static Backdrop Modal -->
+        <div class="modal fade" id="deleteCourseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            role="dialog" aria-labelledby="deleteCourseModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteCourseModalLabel">Delete Staff Course</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="get" class="mt-5 mb-3">
+                            @csrf
+
+                            <input type="hidden" name="course_id" id="course_id">
+                            <p class="h4 f-12 text-center">Are you sure you want to delete <span id="course">Computer
+                                    Science</span> for this lecture?</p>
+
+                            <div class="text-center mt-5">
+                                <x-form.button defaultText="Delete" class="btn-lg btn-danger" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <!-- Static Backdrop Modal -->
     <div class="modal fade" id="userRoleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

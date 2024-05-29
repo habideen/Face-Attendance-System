@@ -36,7 +36,7 @@
                             <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
+                                        <th>Student Name</th>
                                         <th>Matric</th>
                                         <th>Frequency</th>
                                     </tr>
