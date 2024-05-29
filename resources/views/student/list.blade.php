@@ -83,7 +83,7 @@
                         @csrf
 
                         <x-form.input name="id" label="Matriculation Number" type="text" required='true'
-                            parentClass="mb-3 col-sm-6 col-md-3" placeholder="e.g CSC/1950/001" />
+                            parentClass="mb-3" placeholder="e.g CSC/1950/001" />
 
                         <x-form.button defaultText="Find Student" />
 
@@ -110,11 +110,14 @@
                     <form method="get">
                         @csrf
 
-                        <x-form.select name="course" label="Department" required='true' parentClass="mb-4"
+                        <x-form.select name="department" label="Department" required='true' parentClass="mb-4"
                             optionsType="array" :options="['Computer Science', 'Computer Engineering']" />
 
                         <x-form.select name="session" label="Session" required='true' parentClass="mb-4" optionsType="array"
                             :options="['2019/2020', '2020/2021']" />
+
+                        <x-form.select name="enrolment" label="Enrolment" parentClass="mb-4" optionsType="array"
+                            :options="['All', 'Unenrolled', 'Enrolled']" />
 
                         <x-form.button defaultText="Fetch Records" />
 
