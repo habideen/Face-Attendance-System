@@ -35,6 +35,8 @@
             <x-sidenav_admin />
         @elseif (Request::segment(1) == 'class-adviser')
             <x-sidenav_class_adviser />
+        @elseif (Request::segment(1) == 'lecturer')
+            <x-sidenav_lecturer />
         @endif
         <!-- Left Sidebar End -->
 
