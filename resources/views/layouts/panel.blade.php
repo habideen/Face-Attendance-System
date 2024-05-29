@@ -29,11 +29,12 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
 
-        <x-topnav />
-
+        <x-topnav />class-adviser
         <!-- ========== Left Sidebar Start ========== -->
         @if (Request::segment(1) == 'admin')
             <x-sidenav_admin />
+        @elseif (Request::segment(1) == 'class-adviser')
+            <x-sidenav_class_adviser />
         @endif
         <!-- Left Sidebar End -->
 

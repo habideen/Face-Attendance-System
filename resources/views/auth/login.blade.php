@@ -73,7 +73,7 @@
 
                                     <div class="mt-4 d-grid">
                                         <a class="btn btn-primary waves-effect waves-light" type="submit"
-                                            href="/course-adviser">Course Adviser Panel</a>
+                                            href="/class-adviser">Class Adviser Panel</a>
                                     </div>
 
                                     <div class="mt-4 d-grid">

@@ -49,7 +49,7 @@
                         <li><a href="/{{ $accountType }}/students/load_student" key="t-load_student">Load students with
                                 file</a></li>
                         <li><a href="/{{ $accountType }}/students/add_student" key="t-add_student">Add student</a></li>
-                        <li><a href="/{{ $accountType }}/students" key="t-view_student">View studnent</a></li>
+                        <li><a href="/{{ $accountType }}/students" key="t-view_student">View student</a></li>
                     </ul>
                 </li>
                 <li>
