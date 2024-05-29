@@ -64,8 +64,42 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Attendances</h4>
+                            <h4 class="card-title mb-4">
+                                <div class="d-flex">
+                                    <div>Lecturer</div>
+                                    <div class="ms-auto">
+                                        <button class="btn btn-primary me-4 btn-sm mb-3" data-bs-toggle="modal"
+                                            data-bs-target="#addLecturerModal">Add Lecturer</button>
+                                    </div>
+                                </div>
+
+                            </h4>
                             <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Taken By</th>
+                                        <th>Created At</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="/{{ Request::segment(1) }}/staff/details/98aa7373-4167-4d69-bf4e-05383774968e"
+                                                target="_blank">Prof AKINRINDE Olakilekun Ajanlekoko</a></td>
+                                        <td>25 May, 2024 11:51 PM</td>
+                                        <td><button class="btn btn-danger me-4 btn-sm mb-3" data-bs-toggle="modal"
+                                                data-bs-target="#removeLecturerModal">Remove Lecturer</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">Attendances</h4>
+                            <table id="datatable2" class="table table-bordered dt-responsive  nowrap w-100">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -107,6 +141,76 @@
         <!-- container-fluid -->
     </div>
     <!-- End Page-content -->
+
+    <!-- Static Backdrop Modal -->
+    <div class="modal fade" id="addLecturerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        role="dialog" aria-labelledby="addLecturerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLecturerModalLabel">Add Lecturer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="get" class="mt-5 mb-3">
+                        @csrf
+
+                        <input type="hidden" name="user_id" id="user_id">
+                        <p class="h4">This lecturer will be added to this course.</p>
+                        <x-form.select name="current_password" label="Lecturer" parentClass="mb-3"
+                            optionsType="array" :options="[
+                                'Mr Adenipekun Fatai',
+                                'Mrs Oak Florence',
+                                'Prof Jeremy Brown',
+                                'Prof Ivanov Gurevich',
+                            ]" />
+
+                        <div class="row mb-4">
+                            <x-form.input name="password" label="Password" type="password" required='true'
+                                parentClass="mb-3 mt-4 col-12" placeholder="*****"
+                                bottomInfo="This helps us reduce attack" />
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <x-form.button defaultText="Add Lecturer" class="btn-lg btn-danger" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Static Backdrop Modal -->
+    <div class="modal fade" id="removeLecturerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        role="dialog" aria-labelledby="removeLecturerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="removeLecturerModalLabel">Remove Lecturer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="get" class="mt-5 mb-3">
+                        @csrf
+
+                        <input type="hidden" name="user_id" id="user_id">
+                        <p class="h4 text-center">Remove this lecturer from this course?</p>
+                        <p id="user_fullname" class="text-center">Prof AKINRINDE Olakilekun Ajanlekoko</p>
+
+                        <div class="row mb-4">
+                            <x-form.input name="password" label="Password" type="password" required='true'
+                                parentClass="mb-3 mt-4 col-12" placeholder="*****"
+                                bottomInfo="This helps us reduce attack" />
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <x-form.button defaultText="Detach" class="btn-lg btn-danger" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
