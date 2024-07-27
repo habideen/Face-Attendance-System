@@ -1,5 +1,5 @@
 @props([
-    'name',
+    'name' => null,
     'label' => null,
     'value' => null,
     'parentClass' => null,
@@ -17,5 +17,6 @@
     <div class="text-muted">{!! $bottomInfo !!}</div>
     @error($name)
         <div class="invalid-feedback">{{ $message }}</div>
+    @else
     @enderror
 </div>

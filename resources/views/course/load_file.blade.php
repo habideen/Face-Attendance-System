@@ -36,7 +36,7 @@
                                 </div>
                             </div>
 
-                            <form method="get">
+                            <form action="/admin/load_course" method="post" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="row mb-4">

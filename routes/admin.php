@@ -38,6 +38,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [CoursesController::class, 'index']);
     Route::get('add_course', [AddCourseController::class, 'index']);
     Route::get('load_course', [LoadCourseController::class, 'index']);
+    Route::post('load_course', [LoadCourseController::class, 'load']);
     Route::get('details/{course_code}', [CoursesController::class, 'details']);
     Route::get('attendance/{id}', [AttendanceController::class, 'index']);
     Route::get('attendance/summary/{course_code}', [AttendanceController::class, 'summary']);
@@ -47,6 +48,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [StaffController::class, 'index']);
     Route::get('add_staff', [AddStaffController::class, 'index']);
     Route::get('load_staff', [LoadStaffController::class, 'index']);
+    Route::post('load_staff', [LoadStaffController::class, 'load']);
     Route::get('details/{staff_id}', [StaffController::class, 'details']);
   });
 

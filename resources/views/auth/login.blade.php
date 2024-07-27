@@ -63,32 +63,32 @@
                                     </div>
 
                                     <div class="mt-4 d-grid d-none">
-                                        <a class="btn btn-primary waves-effect waves-light" type="submit"
+                                        <a class="btn btn-primary waves-effect waves-light disabled" type="submit"
                                             href="/super-admin">Super Admin Panel</a>
                                     </div>
 
-                                    <div class="mt-4 d-grid">
-                                        <a class="btn btn-primary waves-effect waves-light" type="submit"
+                                    <div class="mt-4 d-grid d-none">
+                                        <a class="btn btn-primary waves-effect waves-light disabled" type="submit"
                                             href="/admin">Admin Panel</a>
                                     </div>
 
-                                    <div class="mt-4 d-grid">
-                                        <a class="btn btn-primary waves-effect waves-light" type="submit"
+                                    <div class="mt-4 d-grid d-none">
+                                        <a class="btn btn-primary waves-effect waves-light disabled" type="submit"
                                             href="/adviser">Class Adviser Panel</a>
                                     </div>
 
-                                    <div class="mt-4 d-grid">
-                                        <a class="btn btn-primary waves-effect waves-light" type="submit"
+                                    <div class="mt-4 d-grid d-none">
+                                        <a class="btn btn-primary waves-effect waves-light disabled" type="submit"
                                             href="/lecturer">Lecturer Panel</a>
                                     </div>
 
                                     <div class="mt-4 d-grid d-none">
-                                        <a class="btn btn-primary waves-effect waves-light" type="submit"
+                                        <a class="btn btn-primary waves-effect waves-light disabled" type="submit"
                                             href="/student">Student Panel</a>
                                     </div>
 
                                     <div class="mt-4 d-grid">
-                                        <button class="btn btn-primary waves-effect waves-light disabled" type="submit">Log
+                                        <button class="btn btn-primary waves-effect waves-light" type="submit">Log
                                             In</button>
                                     </div>
 

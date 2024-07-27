@@ -37,7 +37,8 @@ Route::prefix('test')->group(function () {
 
 
 
-Route::get('/', [LoginController::class, 'index']);
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
 Route::get('logout', [LogoutController::class, 'logout']);
 Route::get('forgot_password', [ForgotPasswordController::class, 'index']);
 Route::get('verify_email', [VerifyEmailController::class, 'index']);
