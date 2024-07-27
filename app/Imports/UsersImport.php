@@ -22,22 +22,7 @@ class UsersImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imple
     {
         totalRecord(); // increase record count by one
 
-        $validator = Validator::make($row, [
-            'school_id' => ['required', 'unique:users,school_id'],
-            'sname' => ['required', 'min:2', 'max:30', 'regex:/^[a-zA-Z\-]+$/'],
-            'fname' => ['required', 'min:2', 'max:30', 'regex:/^[a-zA-Z\-]+$/'],
-            'mname' => ['nullable', 'min:2', 'max:30', 'regex:/^[a-zA-Z\-]+$/'],
-            'department_id' => ['required', 'exists:departments,id'],
-            'office_address' => ['nullable'],
-            'phone_1' => ['nullable', 'min:8', 'max:20', 'unique:users,phone_1'],
-            'phone_2' => ['nullable', 'min:8', 'max:20', 'unique:users,phone_2'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'is_student' => ['nullable', 'in:1,null'],
-            'is_admin' => ['nullable', 'in:1,null'],
-            'is_adviser' => ['nullable', 'in:1,null'],
-            'is_lecturer' => ['nullable', 'in:1,null'],
-            'admission_session' => ['required', new ValidAcademicSession],
-        ]);
+        $validator = validateUserRequest($row);
 
         if ($validator->fails()) {
             $errors = $row['school_id'] . '=>' . $row['email'] . ' => ';
@@ -58,10 +43,10 @@ class UsersImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imple
         $phone_2 = $row['phone_2'] ? $row['phone_2'] : null;
         $email = strtolower($row['email']);
         $password = Hash::make(Str::random());
-        $is_student = $row['is_student'] ? $row['is_student'] : null;
-        $is_admin = $row['is_admin'] ? $row['is_admin'] : null;
-        $is_adviser = $row['is_adviser'] ? $row['is_adviser'] : null;
-        $is_lecturer = $row['is_lecturer'] ? $row['is_lecturer'] : null;
+        $is_student = $row['is_student'] ? 1 : null;
+        $is_admin = $row['is_admin'] ? 1 : null;
+        $is_adviser = $row['is_adviser'] ? 1 : null;
+        $is_lecturer = $row['is_lecturer'] ? 1 : null;
         $admission_session = $row['admission_session'];
 
 
@@ -70,7 +55,7 @@ class UsersImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imple
                 'school_id' => $school_id
             ],
             [
-                'id' => Str::uuid()->toString(),
+                'id' => $id,
                 'email' => $email,
                 'sname' => $sname,
                 'fname' => $fname,

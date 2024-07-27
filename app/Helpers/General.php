@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Validator;
 
@@ -55,15 +56,57 @@ function implodeErrors($validator)
 }
 
 
-function vaidateErrorResponse($validator)
+function validateErrorResponseInput($validator, Request $request, $msg = 'Invalid input submitted!')
 {
-  // var_dump($validator->errors()); abort(500);
   abort(
     redirect()->back()->with([
       'status' => 'failed',
-      'message' => 'Invalid input submitted',
+      'message' => $msg,
     ], Response::HTTP_EXPECTATION_FAILED)
       ->withErrors($validator->errors())
+      ->withInput()
+  );
+}
+
+
+function vaidateErrorResponse($validator)
+{
+  abort(
+    redirect()->back()->with([
+      'status' => 'failed',
+      'message' => 'Invalid input submitted!',
+    ], Response::HTTP_EXPECTATION_FAILED)
+      ->withErrors($validator->errors())
+  );
+}
+
+
+function responseSystemError($msg = 'System error! Please try again.')
+{
+  abort(
+    redirect()->back()->with([
+      'status' => 'failed',
+      'message' => $msg,
+    ], Response::HTTP_SERVICE_UNAVAILABLE)
+  );
+}
+
+
+function responseSuccess($msg = 'Record was saved successful.', $path = null)
+{
+  $data = [
+    'status' => 'successful',
+    'message' => $msg,
+  ];
+
+  if (!$path) {
+    abort(
+      redirect()->back()->with($data, Response::HTTP_OK)
+    );
+  }
+
+  abort(
+    redirect()->to($path)->with($data, Response::HTTP_OK)
   );
 }
 

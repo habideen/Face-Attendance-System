@@ -36,7 +36,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="/{{ $accountType }}/staff/load_staff" key="t-load_staff">Load staff with
                                 file</a></li>
-                        <li><a href="/{{ $accountType }}/staff/add_staff" key="t-add_staff">Add staff</a></li>
+                        <li><a href="/{{ $accountType }}/staff/create" key="t-add_staff">Add staff</a></li>
                         <li><a href="/{{ $accountType }}/staff" key="t-view_staff">View staff</a></li>
                     </ul>
                 </li>
