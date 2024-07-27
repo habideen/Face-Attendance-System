@@ -61,7 +61,7 @@
                                         </label>
                                     </div>
 
-                                    <div class="mt-4 d-grid">
+                                    <div class="mt-4 d-grid d-none">
                                         <a class="btn btn-primary waves-effect waves-light" type="submit"
                                             href="/super-admin">Super Admin Panel</a>
                                     </div>
@@ -81,7 +81,7 @@
                                             href="/lecturer">Lecturer Panel</a>
                                     </div>
 
-                                    <div class="mt-4 d-grid">
+                                    <div class="mt-4 d-grid d-none">
                                         <a class="btn btn-primary waves-effect waves-light" type="submit"
                                             href="/student">Student Panel</a>
                                     </div>
