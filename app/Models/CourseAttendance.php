@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class CourseAttendance extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'id' => 'string',
+        'course_id' => 'string'
+    ];
 }

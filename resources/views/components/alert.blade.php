@@ -1,5 +1,5 @@
 @if (Session::get('status') == 'failed')
     <div class="alert alert-danger mb-3">{!! Session::get('message') !!}</div>
-@elseif (Session::get('status') == 'success')
+@elseif (Session::get('status') == 'successful')
     <div class="alert alert-success mb-3">{!! Session::get('message') !!}</div>
 @endif

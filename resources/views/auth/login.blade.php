@@ -55,8 +55,9 @@
                                     </div>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="remember-check">
-                                        <label class="form-check-label" for="remember-check">
+                                        <input class="form-check-input" type="checkbox" id="remember_check"
+                                            name="remember_check">
+                                        <label class="form-check-label" for="remember_check">
                                             Remember me
                                         </label>
                                     </div>
@@ -73,7 +74,7 @@
 
                                     <div class="mt-4 d-grid">
                                         <a class="btn btn-primary waves-effect waves-light" type="submit"
-                                            href="/class-adviser">Class Adviser Panel</a>
+                                            href="/adviser">Class Adviser Panel</a>
                                     </div>
 
                                     <div class="mt-4 d-grid">

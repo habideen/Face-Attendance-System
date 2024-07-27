@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('class-adviser')->group(function () {
+Route::prefix('adviser')->group(function () {
   Route::get('/', [ProfileController::class, 'index']);
 
   Route::get('profile', [ProfileController::class, 'index']);

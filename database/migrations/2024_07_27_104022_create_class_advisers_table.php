@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('class_advisers', function (Blueprint $table) {
-            $table->uuid();
+            $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained();
             $table->string('session', 9); // tied to users = admission_session
             $table->timestamps();

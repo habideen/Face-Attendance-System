@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('course_attendances', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('course_id')->constrained();
-            $table->foreignUuid('session');
+            $table->string('session', 9);
             $table->timestamps();
         });
     }

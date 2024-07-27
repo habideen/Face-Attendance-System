@@ -1,5 +1,5 @@
 @php
-    $accountType = 'class-adviser';
+    $accountType = 'adviser';
 @endphp
 
 <div class="vertical-menu">

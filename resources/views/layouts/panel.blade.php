@@ -29,13 +29,13 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
 
-        <x-topnav />class-adviser
+        <x-topnav />
         <!-- ========== Left Sidebar Start ========== -->
-        @if (Request::segment(1) == 'admin')
+        @if (Session::get('user_path') == 'admin')
             <x-sidenav_admin />
-        @elseif (Request::segment(1) == 'class-adviser')
+        @elseif (Session::get('user_path') == 'adviser')
             <x-sidenav_class_adviser />
-        @elseif (Request::segment(1) == 'lecturer')
+        @elseif (Session::get('user_path') == 'lecturer')
             <x-sidenav_lecturer />
         @endif
         <!-- Left Sidebar End -->

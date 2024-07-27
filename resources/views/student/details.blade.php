@@ -104,7 +104,7 @@
                             @endif
                             <button class="btn btn-primary me-4 mb-3" data-bs-toggle="modal"
                                 data-bs-target="#disableUserModal">Disable User</button>
-                            @if (Request::segment(1) == 'class-adviser')
+                            @if (Request::segment(1) == 'adviser')
                                 <button class="btn btn-success me-4 mb-3" data-bs-toggle="modal"
                                     data-bs-target="#enrolFaceModal">Enrol Face</button>
                             @endif
@@ -185,7 +185,7 @@
         </div>
     @endif
 
-    @if (Request::segment(1) == 'class-adviser')
+    @if (Request::segment(1) == 'adviser')
         <!-- Static Backdrop Modal -->
         <div class="modal fade" id="enrolFaceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             role="dialog" aria-labelledby="enrolFaceModalLabel" aria-hidden="true">
