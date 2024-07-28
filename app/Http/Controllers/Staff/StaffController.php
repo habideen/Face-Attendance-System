@@ -151,7 +151,7 @@ class StaffController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        if (Auth::user()->id != $id) responseError('You cannot delete yourself!');
+        if (Auth::user()->id == $id) responseError('You cannot delete yourself!');
 
         if (!$request->password)
             responseError('Please enter your passwor');

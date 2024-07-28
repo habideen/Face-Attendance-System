@@ -45,12 +45,9 @@ Route::prefix('admin')->group(function () {
   });
 
   Route::prefix('staff')->group(function () {
-    // Route::get('/', [StaffController::class, 'index']);
-    // Route::get('add_staff', [AddStaffController::class, 'index']);
     Route::get('load_staff', [StaffController::class, 'loadView']);
     Route::post('load_staff', [StaffController::class, 'load']);
     Route::post('role', [StaffController::class, 'role']);
-    // Route::get('details/{staff_id}', [StaffController::class, 'details']);
   });
 
   Route::resource('staff', StaffController::class);
