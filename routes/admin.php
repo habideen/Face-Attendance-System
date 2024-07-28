@@ -4,6 +4,7 @@ use App\Http\Controllers\Course\AddCourseController;
 use App\Http\Controllers\Course\AttendanceController;
 use App\Http\Controllers\Course\CoursesController;
 use App\Http\Controllers\Course\LoadCourseController;
+use App\Http\Controllers\Course\ManageCourseConroller;
 use App\Http\Controllers\ProfileSettings\PasswordController;
 use App\Http\Controllers\ProfileSettings\ProfileController;
 use App\Http\Controllers\Settings\SessionController;
@@ -46,6 +47,8 @@ Route::prefix('admin')->group(function () {
   Route::prefix('courses')->group(function () {
     Route::get('load_course', [LoadCourseController::class, 'index']);
     Route::post('load_course', [LoadCourseController::class, 'load']);
+    Route::get('add_lecturer/{id}', [ManageCourseConroller::class, 'addLecturerView']);
+    Route::post('add_lecturer/{id}', [ManageCourseConroller::class, 'addLecturer']);
   });
   Route::resource('courses', CoursesController::class);
 

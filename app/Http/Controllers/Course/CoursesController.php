@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class CoursesController extends Controller
@@ -20,6 +22,13 @@ class CoursesController extends Controller
         $save->title = $title;
 
         return $save->save();
+    }
+
+    private function validateData(Request $request)
+    {
+        $validator = validateCourseRequest($request->all());
+
+        if ($validator->fails()) validateErrorResponseInput($validator, $request);
     }
 
     /**
@@ -47,9 +56,7 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = validateCourseRequest($request->all());
-
-        if ($validator->fails()) validateErrorResponseInput($validator, $request);
+        $this->validateData($request);
 
         $id = Str::uuid()->toString();
 
@@ -95,9 +102,7 @@ class CoursesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = validateCourseRequest($request->all());
-
-        if ($validator->fails()) validateErrorResponseInput($validator, $request);
+        $this->validateData($request);
 
         $save = Course::find($id);
         $save = $this->saveRecord($save, $request);
@@ -110,8 +115,15 @@ class CoursesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        if (!Hash::check($request->password, Auth::user()->password))
+            responseError('Your password is invalid!');
+
+        $save = Course::where('id', $id)->delete();
+
+        if (!$save) responseSystemError();
+
+        responseSuccess('Record was deleted successfully.', '/admin/courses');
     }
 }
