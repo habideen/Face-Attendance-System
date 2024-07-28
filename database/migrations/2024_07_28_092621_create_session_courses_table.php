@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_lecturers', function (Blueprint $table) {
+        Schema::create('session_courses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained();
             $table->foreignUuid('course_id')->constrained();
-            $table->string('session', 9); // used for courses per session
+            $table->string('session', 9);
+            $table->unsignedTinyInteger('classes_taken')->default('0');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_lecturers');
+        Schema::dropIfExists('session_courses');
     }
 };
