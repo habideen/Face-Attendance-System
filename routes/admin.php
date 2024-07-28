@@ -7,6 +7,7 @@ use App\Http\Controllers\Course\LoadCourseController;
 use App\Http\Controllers\ProfileSettings\PasswordController;
 use App\Http\Controllers\ProfileSettings\ProfileController;
 use App\Http\Controllers\Settings\SessionController;
+use App\Http\Controllers\Staff\ClassAdviserController;
 use App\Http\Controllers\Staff\LoadStaffController;
 use App\Http\Controllers\Staff\StaffController;
 use App\Http\Controllers\Student\LoadStudentController;
@@ -46,6 +47,9 @@ Route::prefix('admin')->group(function () {
     Route::get('load_staff', [LoadStaffController::class, 'index']);
     Route::post('load_staff', [LoadStaffController::class, 'load']);
     Route::post('role', [StaffController::class, 'role']);
+    Route::get('class_adviser/{user_id}', [ClassAdviserController::class, 'index']);
+    Route::post('class_adviser', [ClassAdviserController::class, 'classAdviser']);
+    Route::post('class_adviser/delete/{record_id}', [ClassAdviserController::class, 'classAdviser']);
   });
   Route::resource('staff', StaffController::class);
 

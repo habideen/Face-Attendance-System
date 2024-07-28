@@ -47,18 +47,6 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Email:</td>
-                                        <td>{{ $user->email }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phone 1:</td>
-                                        <td>{{ $user->phone_1 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phone 2:</td>
-                                        <td>{{ $user->phone_2 }}</td>
-                                    </tr>
-                                    <tr>
                                         <td>Department:</td>
                                         <td>{{ $user->department }}</td>
                                     </tr>
@@ -91,28 +79,26 @@
                             <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                                 <thead>
                                     <tr>
-                                        <th>Code</th>
-                                        <th>Title</th>
-                                        <th>Classes Taken</th>
-                                        <th>View</th>
+                                        <th>Department</th>
+                                        <th>Session</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>CSC 501</td>
-                                        <td>Computer Appreciation</td>
-                                        <td>17</td>
-                                        <td>
-                                            @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
-                                                <button class="btn btn-light btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#disableModal">Disable</button>
-                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteCourseModal">Delete</button>
-                                            @endif
-                                            <a href="/{{ Session::get('user_path') }}/courses/details/98aa7373-4167-4d69-bf4e-05383774968e?data_table_search=Prof AKINRINDE Olakilekun Ajanlekoko"
-                                                class="btn btn-primary btn-sm">Attendance</a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($advisers as $adviser)
+                                        <tr>
+                                            <td>{{ $adviser->department }}</td>
+                                            <td>{{ $adviser->session }}</td>
+                                            <td>
+                                                @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
+                                                    <a href="/{{ Session::get('user_path') }}/staff/class_adviser/delete/{{ $adviser->id }}"
+                                                        onclick="if(!confirm('Delete this record?')) {event.preventDefault()}"
+                                                        class="btn btn-light btn-sm">Delete</a>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -123,20 +109,13 @@
                         <div class="card-body">
                             <h4 class="card-title mb-5">Take Action</h4>
                             @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
-                                <a href="/{{ Session::get('user_path') }}/staff/{{ $user->id }}/edit"
-                                    class="btn btn-dark me-4 mb-3">Edit Details</a>
-                                @if (Auth::user()->id != $user->id)
-                                    <button class="btn btn-danger me-4 mb-3" data-bs-toggle="modal"
-                                        data-bs-target="#deleteUserModal">Delete User</button>
+                                @if ($user->is_adviser)
+                                    <button class="btn btn-info me-4 mb-3" data-bs-toggle="modal"
+                                        data-bs-target="#classAdviserModal">Use As Class Adviser</button>
+                                @else
+                                    <button class="btn btn-info me-4 mb-3 disabled">User is not class adviser</button>
                                 @endif
-                                <button class="btn btn-primary me-4 mb-3" data-bs-toggle="modal"
-                                    data-bs-target="#userRoleModal">Update Role</button>
                             @endif
-                            <a href="/{{ Session::get('user_path') }}/staff/class_adviser/{{ $user->id }}"
-                                class="btn btn-info mb-3 me-4">Class Adviser</a>
-                            <a href="/{{ Session::get('user_path') }}/courses/attendance/summary/CSC501"
-                                class="btn btn-success mb-3">View
-                                Attendance Summary</a>
                         </div>
                     </div>
                 </div>
@@ -148,8 +127,9 @@
     </div>
     <!-- End Page-content -->
 
-    @include('components.modal.user_role')
-    @include('components.modal.delete_user')
+    @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
+        @include('components.modal.class_adviser')
+    @endif
 @endsection
 
 

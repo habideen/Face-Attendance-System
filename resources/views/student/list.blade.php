@@ -47,14 +47,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>CSC/2019/###</td>
-                                            <td>SALAMI Kilanko Lasisi</td>
-                                            <td>Computer Science</td>
-                                            <td>No</td>
-                                            <td><a href="/{{ Request::segment(1) }}/students/details/98aa7373-4167-4d69-bf4e-05383774968e"
-                                                    class="btn btn-light btn-sm">View</a></td>
-                                        </tr>
+                                        @foreach ($users as $user)
+                                            <tr>
+                                                <td>{{ $user->school_id }}</td>
+                                                <td>{{ $user->title . ' ' . $user->sname . ' ' . $user->fname . ' ' . $user->mname }}
+                                                </td>
+                                                <td>{{ $user->department }}</td>
+                                                <td>{{ $user->face_enrolled ? 'Yes' : 'No' }}</td>
+                                                <td><a href="/{{ Request::segment(1) }}/students/{{ $user->id }}"
+                                                        class="btn btn-light btn-sm">View</a></td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

@@ -62,10 +62,8 @@ class StaffController extends Controller
      */
     public function create()
     {
-        $departments = Department::select('id', 'department')->get();
-
         return view('staff.user_form')->with([
-            'departments' => $departments
+            'departments' => departments()
         ]);
     }
 
@@ -103,7 +101,8 @@ class StaffController extends Controller
         if (!$user) responseError('The record does not exist!');
 
         return view('staff.details')->with([
-            'user' => $user
+            'user' => $user,
+            'departments' => departments()
         ]);
     }
 
@@ -113,13 +112,12 @@ class StaffController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
-        $departments = Department::select('id', 'department')->get();
 
         if (!$user) responseError('The record does not exist!');
 
         return view('staff.user_form')->with([
             'user' => $user,
-            'departments' => $departments
+            'departments' => departments()
         ]);
     }
 

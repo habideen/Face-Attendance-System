@@ -35,7 +35,23 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return view('student.list');
+        $users = User::select(
+            'users.id',
+            'users.school_id',
+            'users.title',
+            'users.sname',
+            'users.fname',
+            'users.mname',
+            'users.face_enrolled',
+            'departments.department'
+        )
+            ->join('departments', 'departments.id', '=', 'users.department_id')
+            ->whereNotNull('is_student')
+            ->get();
+
+        return view('student.list')->with([
+            'users' => $users
+        ]);
     }
 
     /**
@@ -43,10 +59,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $departments = Department::select('id', 'department')->get();
-
         return view('student.user_form')->with([
-            'departments' => $departments
+            'departments' => departments()
         ]);
     }
 

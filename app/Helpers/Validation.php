@@ -26,3 +26,14 @@ if (!function_exists('validateUserRequest')) {
     ]);
   }
 }
+
+if (!function_exists('validateAddClassAdviser')) {
+  function validateAddClassAdviser($data)
+  {
+    return Validator::make($data, [
+      'user_id' => ['nullable', 'exists:users,id'],
+      'department_id' => ['required', 'exists:departments,id'],
+      'admission_session' => ['required', new ValidAcademicSession],
+    ]);
+  }
+}

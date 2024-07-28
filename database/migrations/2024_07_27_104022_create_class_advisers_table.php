@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('class_advisers', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained();
+            $table->unsignedBigInteger('department_id');
             $table->string('session', 9); // tied to users = admission_session
             $table->timestamps();
         });
