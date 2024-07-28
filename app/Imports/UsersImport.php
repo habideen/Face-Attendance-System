@@ -43,7 +43,7 @@ class UsersImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imple
         $phone_2 = $row['phone_2'] ? $row['phone_2'] : null;
         $email = strtolower($row['email']);
         $password = Hash::make(Str::random());
-        $is_student = $row['is_student'] ? 1 : null;
+        $is_student = null;
         $is_admin = $row['is_admin'] ? 1 : null;
         $is_adviser = $row['is_adviser'] ? 1 : null;
         $is_lecturer = $row['is_lecturer'] ? 1 : null;
