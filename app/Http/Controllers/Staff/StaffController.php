@@ -44,7 +44,22 @@ class StaffController extends Controller
      */
     public function index()
     {
-        return view('staff.list');
+        $users = User::select(
+            'users.id',
+            'users.school_id',
+            'users.title',
+            'users.sname',
+            'users.fname',
+            'users.mname',
+            'departments.department'
+        )
+            ->join('departments', 'departments.id', '=', 'users.department_id')
+            ->whereNull('is_student')
+            ->get();
+
+        return view('staff.list')->with([
+            'users' => $users
+        ]);
     }
 
     /**
@@ -136,6 +151,8 @@ class StaffController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
+        if (Auth::user()->id != $id) responseError('You cannot delete yourself!');
+
         if (!$request->password)
             responseError('Please enter your passwor');
 

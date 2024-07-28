@@ -124,8 +124,10 @@
                                 <h4 class="card-title mb-5">Take Action</h4>
                                 <a href="/{{ Request::segment(1) }}/staff/{{ $user->id }}/edit"
                                     class="btn btn-dark me-4 mb-3">Edit Details</a>
-                                <button class="btn btn-danger me-4 mb-3" data-bs-toggle="modal"
-                                    data-bs-target="#deleteUserModal">Delete User</button>
+                                @if (Auth::user()->id != $user->id)
+                                    <button class="btn btn-danger me-4 mb-3" data-bs-toggle="modal"
+                                        data-bs-target="#deleteUserModal">Delete User</button>
+                                @endif
                                 <button class="btn btn-primary me-4 mb-3" data-bs-toggle="modal"
                                     data-bs-target="#userRoleModal">Update Role</button>
                                 <a href="/{{ Request::segment(1) }}/courses/attendance/summary/CSC501"

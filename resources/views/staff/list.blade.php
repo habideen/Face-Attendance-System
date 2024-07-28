@@ -46,13 +46,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>JCS/20131909</td>
-                                            <td>Prof AKINRINDE Olakilekun Ajanlekoko</td>
-                                            <td>Computer Science</td>
-                                            <td><a href="/{{ Request::segment(1) }}/staff/details/98aa7373-4167-4d69-bf4e-05383774968e"
-                                                    class="btn btn-light btn-sm">View</a></td>
-                                        </tr>
+                                        @foreach ($users as $user)
+                                            <tr>
+                                                <td>{{ $user->school_id }}</td>
+                                                <td>{{ $user->title . ' ' . $user->sname . ' ' . $user->fname . ' ' . $user->mname }}
+                                                </td>
+                                                <td>{{ $user->department }}</td>
+                                                <td><a href="/{{ Request::segment(1) }}/staff/{{ $user->id }}"
+                                                        class="btn btn-light btn-sm">View</a></td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
