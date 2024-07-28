@@ -32,27 +32,29 @@
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">Session: 2019/2020 <i
+                    aria-haspopup="true" aria-expanded="false">Session: {{ Session::get('academic_session') }} <i
                         class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
 
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item" data-lang="en">
-                        <span class="align-middle">2019/2020</span>
-                    </a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item" data-lang="en">
-                        <span class="align-middle">2020/2021</span>
-                    </a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item" data-lang="en">
-                        <span class="align-middle">2021/2022</span>
-                    </a>
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item" data-lang="en">
-                        <span class="align-middle">2022/2023</span>
-                    </a>
+                    @php
+                        $startYear = 2015;
+                        $currentYear = date('Y');
+                        $years = [];
+
+                        // Generate academic years in reverse order
+                        for ($year = $currentYear; $year > $startYear; $year--) {
+                            $prevYear = $year - 1;
+                            $years[] = "$prevYear/$year";
+                        }
+                    @endphp
+                    @foreach ($years as $academicYear)
+                        <!-- item-->
+                        <a href="/set_default_session?session={{ urlencode($academicYear) }}"
+                            class="dropdown-item notify-item" data-lang="en">
+                            <span class="align-middle">{{ $academicYear }}</span>
+                        </a>
+                    @endforeach
                 </div>
             </div>
 

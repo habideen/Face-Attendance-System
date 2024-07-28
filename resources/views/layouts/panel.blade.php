@@ -58,6 +58,12 @@
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>
 
+
+
+    @if (!Session::has('academic_session'))
+        @include('components.modal.session')
+    @endif
+
     <!-- JAVASCRIPT -->
     <script src="/assets/libs/jquery/jquery.min.js"></script>
     <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -67,6 +73,13 @@
 
     <!-- App js -->
     <script src="/assets/js/app.js"></script>
+    @if (!Session::has('academic_session'))
+        <script>
+            $(document).ready(function() {
+                $('#defaultSessionModal').modal('show');
+            });
+        </script>
+    @endif
 
     @yield('script')
 </body>
