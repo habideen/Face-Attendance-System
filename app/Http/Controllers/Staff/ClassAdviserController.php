@@ -33,7 +33,9 @@ class ClassAdviserController extends Controller
         $advisers = ClassAdviser::select(
             'class_advisers.id',
             'class_advisers.session',
-            'departments.department'
+            'departments.department',
+            'class_advisers.created_at',
+            'class_advisers.updated_at',
         )
             ->join('departments', 'departments.id', '=', 'class_advisers.department_id')
             ->where('class_advisers.user_id', $user_id)
@@ -68,6 +70,15 @@ class ClassAdviserController extends Controller
 
         if (!$save) responseSystemError();
 
-        responseSuccess('The record was saved successfully.', '/admin/staff/' . $request->user_id,);
+        responseSuccess('The record was saved successfully.');
+    }
+
+    public function deleteClassAdviser(Request $request, string $record_id)
+    {
+        $delete = ClassAdviser::where('id', $record_id)->delete();
+
+        if (!$delete) responseSystemError();
+
+        responseSuccess('The record was deleted successfully.');
     }
 }

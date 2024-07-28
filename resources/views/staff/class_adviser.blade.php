@@ -81,6 +81,8 @@
                                     <tr>
                                         <th>Department</th>
                                         <th>Session</th>
+                                        <th>Created At</th>
+                                        <th>Updated At</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -89,11 +91,18 @@
                                         <tr>
                                             <td>{{ $adviser->department }}</td>
                                             <td>{{ $adviser->session }}</td>
+                                            <td>{{ date('d M, Y h:i a', strtotime($adviser->created_at)) }}</td>
+                                            <td>{{ date('d M, Y h:i a', strtotime($adviser->updated_at)) }}</td>
                                             <td>
                                                 @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
-                                                    <a href="/{{ Session::get('user_path') }}/staff/class_adviser/delete/{{ $adviser->id }}"
-                                                        onclick="if(!confirm('Delete this record?')) {event.preventDefault()}"
-                                                        class="btn btn-light btn-sm">Delete</a>
+                                                    <form
+                                                        action="/{{ Session::get('user_path') }}/staff/class_adviser/delete/{{ $adviser->id }}"
+                                                        onsubmit="if(!confirm('Delete this record?')) {event.preventDefault()}"
+                                                        method="post">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-light btn-sm">Delete</button>
+                                                    </form>
                                                 @endif
 
                                             </td>

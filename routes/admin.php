@@ -49,7 +49,7 @@ Route::prefix('admin')->group(function () {
     Route::post('role', [StaffController::class, 'role']);
     Route::get('class_adviser/{user_id}', [ClassAdviserController::class, 'index']);
     Route::post('class_adviser', [ClassAdviserController::class, 'classAdviser']);
-    Route::post('class_adviser/delete/{record_id}', [ClassAdviserController::class, 'classAdviser']);
+    Route::delete('class_adviser/delete/{record_id}', [ClassAdviserController::class, 'deleteClassAdviser']);
   });
   Route::resource('staff', StaffController::class);
 
