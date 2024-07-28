@@ -30,17 +30,24 @@
                         <div class="card-body">
                             <x-alert />
 
-                            <form method="get">
+                            <form method="post"
+                                action="/{{ Session::get('user_path') }}/courses{{ isset($course) ? '/' . $course->id : '' }}">
                                 @csrf
+                                @isset($course)
+                                    @method('PATCH')
+                                @endisset
 
                                 <div class="row mb-4">
-                                    <x-form.input name="course_code" label="Course code" type="text" required='true'
-                                        parentClass="mb-3 col-sm-4" placeholder="e.g. CSC501" />
-                                    <x-form.input name="course_title" label="Course title" type="text" required='true'
-                                        parentClass="mb-3 col-sm-8" placeholder="e.g. Introduction to Networking" />
+                                    <x-form.input name="code" label="Course code" type="text" required='true'
+                                        parentClass="mb-3 col-sm-4" placeholder="e.g. CSC501"
+                                        value="{{ old('code') ?? ($course->code ?? '') }}"
+                                        pattern="^[ ]*[a-zA-Z]{3,3}[ ]*[0-9]{3,3}[ ]*$" />
+                                    <x-form.input name="title" label="Course title" type="text" required='true'
+                                        parentClass="mb-3 col-sm-8" placeholder="e.g. Introduction to Networking"
+                                        value="{{ old('title') ?? ($course->title ?? '') }}" />
                                 </div>
 
-                                <x-form.button defaultText="Save Course" />
+                                <x-form.button defaultText="{{ isset($course) ? 'Update' : 'Save' }} Course" />
 
                             </form>
                         </div>

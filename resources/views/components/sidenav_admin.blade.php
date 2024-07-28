@@ -19,9 +19,8 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="/{{ Session::get('user_path') }}/courses/load_course" key="t-load_course">Load
-                                courses with
-                                file</a></li>
-                        <li><a href="/{{ Session::get('user_path') }}/courses/add_course" key="t-add_course">Add
+                                courses with file</a></li>
+                        <li><a href="/{{ Session::get('user_path') }}/courses/create" key="t-add_course">Add
                                 course</a></li>
                         <li><a href="/{{ Session::get('user_path') }}/courses" key="t-view_course">View courses</a></li>
                     </ul>

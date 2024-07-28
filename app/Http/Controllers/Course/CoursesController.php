@@ -4,10 +4,24 @@ namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CoursesController extends Controller
 {
+    private function saveRecord(Model $save, Request $request)
+    {
+        $code = strtoupper($request->code);
+        $code = str_replace(' ', '', $code);
+        $title = strtoupper($request->title);
+
+        $save->code = $code;
+        $save->title = $title;
+
+        return $save->save();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +39,7 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        //
+        return view('course.course_form');
     }
 
     /**
@@ -33,7 +47,19 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = validateCourseRequest($request->all());
+
+        if ($validator->fails()) validateErrorResponseInput($validator, $request);
+
+        $id = Str::uuid()->toString();
+
+        $save = new Course;
+        $save->id = $id;
+        $save = $this->saveRecord($save, $request);
+
+        if (!$save) responseSystemError();
+
+        responseSuccess('The course was registered successfully.', '/admin/courses/' . $id);
     }
 
     /**
@@ -49,7 +75,13 @@ class CoursesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $course = Course::find($id);
+
+        if (!$course) responseError('The course does not exist!');
+
+        return view('course.course_form')->with([
+            'course' => $course
+        ]);
     }
 
     /**
@@ -57,7 +89,16 @@ class CoursesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = validateCourseRequest($request->all());
+
+        if ($validator->fails()) validateErrorResponseInput($validator, $request);
+
+        $save = Course::find($id);
+        $save = $this->saveRecord($save, $request);
+
+        if (!$save) responseSystemError();
+
+        responseSuccess('The course was updated successfully.', '/admin/courses/' . $id);
     }
 
     /**
