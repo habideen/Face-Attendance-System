@@ -9,6 +9,6 @@ class AddStudentController extends Controller
 {
     public function index()
     {
-        return view('student.add_single');
+        return view('student.user_form');
     } //index
 }

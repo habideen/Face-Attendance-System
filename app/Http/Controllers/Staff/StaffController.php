@@ -30,8 +30,6 @@ class StaffController extends Controller
         $save->is_adviser = $request->is_adviser ? 1 : null;
         $save->is_lecturer = $request->is_lecturer ? 1 : null;
         $save->admission_session = $request->admission_session;
-        $save->created_at = now();
-        $save->updated_at = now();
 
         return $save->save();
     }

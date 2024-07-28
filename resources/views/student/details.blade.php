@@ -38,27 +38,28 @@
                                 <tbody>
                                     <tr>
                                         <td>Student ID:</td>
-                                        <td>JCS/20131908</td>
+                                        <td>{{ $user->school_id }}</td>
                                     </tr>
                                     <tr>
                                         <td>Name:</td>
-                                        <td>SALAMI Kilanko Lasisi</td>
+                                        <td>{{ $user->sname . ' ' . $user->fname . ' ' . $user->mname }}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Email:</td>
-                                        <td>olakilefun@staff.oauife.edu.ng</td>
+                                        <td>{{ $user->email }}</td>
                                     </tr>
                                     <tr>
                                         <td>Phone 1:</td>
-                                        <td>081########</td>
+                                        <td>{{ $user->phone_1 }}</td>
                                     </tr>
                                     <tr>
                                         <td>Phone 2:</td>
-                                        <td>090########</td>
+                                        <td>{{ $user->phone_2 }}</td>
                                     </tr>
                                     <tr>
                                         <td>Department:</td>
-                                        <td>Computer Science</td>
+                                        <td>{{ $user->department }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -102,8 +103,11 @@
                                 <button class="btn btn-danger me-4 mb-3" data-bs-toggle="modal"
                                     data-bs-target="#deleteUserModal">Delete User</button>
                             @endif
-                            <button class="btn btn-primary me-4 mb-3" data-bs-toggle="modal"
-                                data-bs-target="#disableUserModal">Disable User</button>
+                            @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin' || Request::segment(1) == 'adviser')
+                                <button class="btn btn-primary me-4 mb-3" data-bs-toggle="modal"
+                                    data-bs-target="#disableUserModal">{{ !$user->is_disabled ? 'Disable' : 'Enable' }}
+                                    User</button>
+                            @endif
                             @if (Request::segment(1) == 'adviser')
                                 <button class="btn btn-success me-4 mb-3" data-bs-toggle="modal"
                                     data-bs-target="#enrolFaceModal">Enrol Face</button>
@@ -120,107 +124,16 @@
     <!-- End Page-content -->
 
     <!-- Static Backdrop Modal -->
-    <div class="modal fade" id="disableUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        role="dialog" aria-labelledby="disableUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="disableUserModalLabel">Disable User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="get" class="mt-5 mb-3">
-                        @csrf
-
-                        <input type="hidden" name="user_id" id="user_id">
-                        <p class="h4 text-center">Disable this user?</p>
-                        <p id="user_fullname" class="text-center">SALAMI Kilanko Lasisi</p>
-
-                        <div class="row mb-4">
-                            <x-form.input name="password" label="Password" type="password" required='true'
-                                parentClass="mb-3 mt-4 col-12" placeholder="*****"
-                                bottomInfo="This helps us reduce attack" />
-                        </div>
-
-                        <div class="text-center mt-5">
-                            <x-form.button defaultText="Disable" class="btn-lg btn-danger" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin' || Request::segment(1) == 'adviser')
+        @include('components.modal.disable_user')
+    @endif
 
     @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
-        <!-- Static Backdrop Modal -->
-        <div class="modal fade" id="deleteUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="get" class="mt-5 mb-3">
-                            @csrf
-
-                            <input type="hidden" name="user_id" id="user_id">
-                            <p class="h4 text-center">Delete this user?</p>
-                            <p id="user_fullname" class="text-center">SALAMI Kilanko Lasisi</p>
-
-                            <div class="row mb-4">
-                                <x-form.input name="password" label="Password" type="password" required='true'
-                                    parentClass="mb-3 mt-4 col-12" placeholder="*****"
-                                    bottomInfo="This helps us reduce attack" />
-                            </div>
-
-                            <div class="text-center mt-5">
-                                <x-form.button defaultText="Delete" class="btn-lg btn-danger" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('components.modal.delete_user')
     @endif
 
     @if (Request::segment(1) == 'adviser')
-        <!-- Static Backdrop Modal -->
-        <div class="modal fade" id="enrolFaceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            role="dialog" aria-labelledby="enrolFaceModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="enrolFaceModalLabel">Enrol Student Face</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mt-3">
-                            <div class="col-sm-4 col-md-3 col-lg-2 text-center">
-                                <div class="border text-center bg-light mb-2">
-                                    <img src="/assets/images/users/avatar.jpg" alt="enrol face" class="img-fluid">
-                                </div>
-                                <x-form.button defaultText="<i class='mdi mdi-camera-enhance me-2'></i> Scan Face"
-                                    class="btn-lg btn-light" />
-                            </div>
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-4 col-md-3 col-lg-2 text-center">
-                                <div class="border text-center bg-light mb-2">
-                                    <img src="/assets/images/users/avatar.jpg" alt="enrol face" class="img-fluid">
-                                </div>
-                                <x-form.button defaultText="<i class='mdi mdi-cloud-upload-outline me-2'></i> Enrol Face"
-                                    class="btn-lg btn-primary" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary waves-effect"
-                            data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('components.modal.enrol_face')
     @endif
 @endsection
 

@@ -1,6 +1,6 @@
 @extends('layouts.panel')
 
-@section('page_title', 'Add Single Staff')
+@section('page_title', 'Add Single Student')
 
 
 @section('content')
@@ -11,12 +11,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Add Single Staff</h4>
+                        <h4 class="mb-sm-0 font-size-18">Add Single Student</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/{{ Request::segment(1) }}/dashboard">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Add Single Staff</li>
+                                <li class="breadcrumb-item active">Add Single Student</li>
                             </ol>
                         </div>
                     </div>
@@ -30,30 +30,22 @@
                         <div class="card-body">
                             <x-alert />
 
-                            <form method="post" action="/admin/staff{{ isset($user) ? '/' . $user->id : '' }}">
+                            <form method="post" action="/admin/students{{ isset($user) ? '/' . $user->id : '' }}">
                                 @csrf
                                 @isset($user)
                                     @method('PATCH')
                                 @endisset
 
                                 <div class="row mb-4">
-                                    <x-form.select name="title" label="Title" required="true"
-                                        parentClass="mb-3 col-sm-6 col-md-3" optionsType="array" :options="['Mr', 'Mrs', 'Dr', 'Prof']" />
                                     <x-form.input name="sname" label="Surname" type="text" required='true'
-                                        parentClass="mb-3 col-sm-6 col-md-3" placeholder="Enter Surname"
+                                        parentClass="mb-3 col-sm-4" placeholder="Enter Surname"
                                         value="{{ old('sname') ?? ($user->sname ?? '') }}" />
                                     <x-form.input name="fname" label="First name" type="text" required='true'
-                                        parentClass="mb-3 col-sm-6 col-md-3" placeholder="Enter First name"
+                                        parentClass="mb-3 col-sm-4" placeholder="Enter First name"
                                         value="{{ old('fname') ?? ($user->fname ?? '') }}" />
                                     <x-form.input name="mname" label="Middle name" type="text"
-                                        parentClass="mb-3 col-sm-6 col-md-3" placeholder="Enter Middle name"
+                                        parentClass="mb-3 col-sm-4" placeholder="Enter Middle name"
                                         value="{{ old('mname') ?? ($user->mname ?? '') }}" />
-                                </div>
-
-                                <div class="row mb-4">
-                                    <x-form.input name="office_address" label="Office Address" type="text"
-                                        required='true' parentClass="mb-3 col-12" placeholder="Enter Address"
-                                        value="{{ old('office_address') ?? ($user->office_address ?? '') }}" />
                                 </div>
 
                                 <div class="mb-4">
@@ -62,7 +54,7 @@
                                         <x-form.input name="email" label="Email" type="email" required='true'
                                             parentClass="mb-3 col-sm-6" placeholder="e.g. abc@xyx.com"
                                             value="{{ old('email') ?? ($user->email ?? '') }}" />
-                                        <x-form.input name="phone_1" label="Phone 1" type="text" required='true'
+                                        <x-form.input name="phone_1" label="Phone 1" type="text"
                                             parentClass="mb-3 col-sm-6 col-md-3" placeholder="e.g 08165346948"
                                             value="{{ old('phone_1') ?? ($user->phone_1 ?? '') }}" />
                                         <x-form.input name="phone_2" label="Phone 1" type="text"
@@ -99,16 +91,6 @@
                                     </div>
                                 </div>
 
-                                <div class="row mb-4">
-                                    <div class="h4 col-12 mb-3">Select Roles</div>
-                                    <x-form.switch name="is_admin" label="Admin" parentClass="mb-3 col-sm-4"
-                                        ischecked="{{ old('is_admin') || (isset($user) && $user->is_admin) ? 'true' : 'false' }}" />
-                                    <x-form.switch name="is_adviser" label="Staff Adviser" parentClass="mb-3 col-sm-4"
-                                        ischecked="{{ old('is_adviser') || (isset($user) && $user->is_adviser) ? 'true' : 'false' }}" />
-                                    <x-form.switch name="is_lecturer" label="Lecturer" parentClass="mb-3 col-sm-4"
-                                        ischecked="{{ old('is_lecturer') || (isset($user) && $user->is_lecturer) ? 'true' : 'false' }}" />
-                                </div>
-
                                 <x-form.button defaultText="{{ isset($user) ? 'Edit' : 'Add' }} User" class="mt-4" />
 
                             </form>
@@ -122,11 +104,4 @@
         <!-- container-fluid -->
     </div>
     <!-- End Page-content -->
-@endsection
-
-@section('script')
-    <script>
-        $('#title').val("{{ old('title') ?? ($user->title ?? '') }}");
-        $('#department_id').val("{{ old('department_id') ?? ($user->department_id ?? '') }}");
-    </script>
 @endsection

@@ -60,8 +60,6 @@ class StudentImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imp
                 'password' => $password,
                 'is_student' => $is_student,
                 'admission_session' => $admission_session,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]
         );
 

@@ -73,8 +73,6 @@ class StaffImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imple
                 'is_adviser' => $is_adviser,
                 'is_lecturer' => $is_lecturer,
                 'admission_session' => $admission_session,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]
         );
 
