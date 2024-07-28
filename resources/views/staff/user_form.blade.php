@@ -30,8 +30,11 @@
                         <div class="card-body">
                             <x-alert />
 
-                            <form method="post" action="/admin/staff">
+                            <form method="post" action="/admin/staff{{ isset($user) ? '/' . $user->id : '' }}">
                                 @csrf
+                                @isset($user)
+                                    @method('PATCH')
+                                @endisset
 
                                 <div class="row mb-4">
                                     <x-form.select name="title" label="Title" required="true"

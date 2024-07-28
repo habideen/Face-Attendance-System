@@ -19,6 +19,7 @@ class StaffController extends Controller
     private function saveRecord(Model $save, Request $request)
     {
         $save->school_id = strtoupper($request->school_id);
+        $save->title = ucwords($request->title);
         $save->sname = ucwords($request->sname);
         $save->fname = ucwords($request->fname);
         $save->mname = ucwords($request->mname);
@@ -53,7 +54,7 @@ class StaffController extends Controller
     {
         $departments = Department::select('id', 'department')->get();
 
-        return view('staff.add_single')->with([
+        return view('staff.user_form')->with([
             'departments' => $departments
         ]);
     }
@@ -101,7 +102,15 @@ class StaffController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        $departments = Department::select('id', 'department')->get();
+
+        if (!$user) responseError('The record does not exist!');
+
+        return view('staff.user_form')->with([
+            'user' => $user,
+            'departments' => $departments
+        ]);
     }
 
     /**
@@ -109,16 +118,37 @@ class StaffController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->merge(['id' => $id]);
+        $validator = validateUserRequest($request->all());
+
+        if ($validator->fails()) validateErrorResponseInput($validator, $request);
+
+        $save = User::find($id);
+        $save = $this->saveRecord($save, $request);
+
+        if (!$save) responseSystemError();
+
+        responseSuccess('The user was upated successfully.', '/admin/staff/' . $id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        if (!$request->password)
+            responseError('Please enter your passwor');
+
+        if (!Hash::check($request->password, Auth::user()->password))
+            responseError('Your password is invalid!');
+
+        $save = User::where('id', $id)->delete();
+
+        if (!$save) responseSystemError();
+
+        responseSuccess('Record was updated successfully.', '/admin/staff');
     }
+
 
     public function loadView()
     {
