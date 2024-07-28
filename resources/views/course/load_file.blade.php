@@ -36,7 +36,8 @@
                                 </div>
                             </div>
 
-                            <form action="/admin/load_course" method="post" enctype="multipart/form-data">
+                            <form action="/{{ Session::get('user_path') }}/courses/load_course" method="post"
+                                enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="row mb-4">

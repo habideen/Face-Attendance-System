@@ -37,3 +37,17 @@ if (!function_exists('validateAddClassAdviser')) {
     ]);
   }
 }
+
+if (!function_exists('validateCourseRequest')) {
+  function validateCourseRequest($data)
+  {
+    return Validator::make($data, [
+      'id' => ['nullable', 'exists:users,id'],
+      'code' => [
+        'required', 'string', 'min:6', 'max:6', 'regex:/^[a-zA-Z]{3,3}[\s]*[0-9]{3,3}$/',
+        Rule::unique('courses', 'code')->ignore($data['id'] ?? '', 'id')
+      ],
+      'title' => ['required', 'string', 'min:2', 'max:50']
+    ]);
+  }
+}

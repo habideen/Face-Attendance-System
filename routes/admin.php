@@ -33,7 +33,7 @@ Route::prefix('admin')->group(function () {
 
   Route::get('session', [SessionController::class, 'index']);
 
-  Route::prefix('courses')->group(function () {
+  Route::prefix('coursesXXXXX')->group(function () {
     Route::get('/', [CoursesController::class, 'index']);
     Route::get('add_course', [AddCourseController::class, 'index']);
     Route::get('load_course', [LoadCourseController::class, 'index']);
@@ -42,6 +42,12 @@ Route::prefix('admin')->group(function () {
     Route::get('attendance/{id}', [AttendanceController::class, 'index']);
     Route::get('attendance/summary/{course_code}', [AttendanceController::class, 'summary']);
   });
+
+  Route::prefix('courses')->group(function () {
+    Route::get('load_course', [LoadCourseController::class, 'index']);
+    Route::post('load_course', [LoadCourseController::class, 'load']);
+  });
+  Route::resource('courses', CoursesController::class);
 
   Route::prefix('staff')->group(function () {
     Route::get('load_staff', [LoadStaffController::class, 'index']);

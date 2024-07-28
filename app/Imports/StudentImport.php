@@ -22,7 +22,8 @@ class StudentImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imp
         $validator = validateUserRequest($row);
 
         if ($validator->fails()) {
-            $errors = $row['school_id'] . '=>' . $row['email'] . ' => ';
+            $errors = ($row['school_id'] ?? 'Invalid column') . '=>' .
+                ($row['email'] ?? 'Invalid column') . ' => ';
             $errors .= implodeErrors($validator);
             failedSession($errors);
             return;
