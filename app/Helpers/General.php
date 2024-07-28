@@ -92,6 +92,17 @@ function responseSystemError($msg = 'System error! Please try again.')
 }
 
 
+function responseError($msg)
+{
+  abort(
+    redirect()->back()->with([
+      'status' => 'failed',
+      'message' => $msg,
+    ], Response::HTTP_EXPECTATION_FAILED)
+  );
+}
+
+
 function responseSuccess($msg = 'Record was saved successful.', $path = null)
 {
   $data = [

@@ -38,31 +38,45 @@
                                 <tbody>
                                     <tr>
                                         <td>Staff ID:</td>
-                                        <td>JCS/20131908</td>
+                                        <td>{{ $user->school_id }}</td>
                                     </tr>
                                     <tr>
                                         <td>Name:</td>
-                                        <td>Prof AKINRINDE Olakilekun Ajanlekoko</td>
+                                        <td>{{ $user->title . ' ' . $user->sname . ' ' . $user->fname . ' ' . $user->mname }}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Email:</td>
-                                        <td>olakilefun@staff.oauife.edu.ng</td>
+                                        <td>{{ $user->email }}</td>
                                     </tr>
                                     <tr>
                                         <td>Phone 1:</td>
-                                        <td>081########</td>
+                                        <td>{{ $user->phone_1 }}</td>
                                     </tr>
                                     <tr>
                                         <td>Phone 2:</td>
-                                        <td>090########</td>
+                                        <td>{{ $user->phone_2 }}</td>
                                     </tr>
                                     <tr>
                                         <td>Department:</td>
-                                        <td>Computer Science</td>
+                                        <td>{{ $user->department }}</td>
                                     </tr>
                                     <tr>
                                         <td>Roles:</td>
-                                        <td>Admin, Class Adviser, Lecturer</td>
+                                        @php
+                                            $roles = [];
+                                            if ($user->is_admin) {
+                                                $roles[] = 'Admin';
+                                            }
+                                            if ($user->is_adviser) {
+                                                $roles[] = 'Class Adviser';
+                                            }
+                                            if ($user->is_lecturer) {
+                                                $roles[] = 'Lecturer';
+                                            }
+                                            $roles = implode(', ', $roles);
+                                        @endphp
+                                        <td>{{ $roles }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -191,14 +205,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="get" class="mt-5 mb-3">
+                    <form method="post" action="/admin/staff/role" class="mt-5 mb-3">
                         @csrf
 
-                        <input type="hidden" name="course_id" id="course_id">
+                        <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
                         <div class="row mb-4">
-                            <x-form.switch name="isAdmin" label="Admin" parentClass="mb-3 col-12" />
-                            <x-form.switch name="isStaffAdviser" label="Staff Adviser" parentClass="mb-3 col-12" />
-                            <x-form.switch name="isLecturer" label="Lecturer" parentClass="mb-3 col-12" />
+                            <x-form.switch name="is_admin" label="Admin" parentClass="mb-3 col-12"
+                                ischecked="{{ $user->is_admin ? 'true' : 'false' }}" />
+                            <x-form.switch name="is_adviser" label="Class Adviser" parentClass="mb-3 col-12"
+                                ischecked="{{ $user->is_adviser ? 'true' : 'false' }}" />
+                            <x-form.switch name="is_lecturer" label="Lecturer" parentClass="mb-3 col-12"
+                                ischecked="{{ $user->is_lecturer ? 'true' : 'false' }}" />
 
                             <x-form.input name="password" label="Password" type="password" required='true'
                                 parentClass="mb-3 mt-4 col-12" placeholder="*****"
