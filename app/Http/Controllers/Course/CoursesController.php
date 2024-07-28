@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class CoursesController extends Controller
@@ -12,7 +13,11 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        return view('course.list');
+        $courses = Course::select('id', 'code', 'title')->get();
+
+        return view('course.list')->with([
+            'courses' => $courses
+        ]);
     }
 
     /**

@@ -15,7 +15,8 @@
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/{{ Request::segment(1) }}/dashboard">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="/{{ Session::get('user_path') }}/dashboard">Dashboard</a>
+                                </li>
                                 <li class="breadcrumb-item active">View Course</li>
                             </ol>
                         </div>
@@ -41,13 +42,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>CSC 501</td>
-                                            <td>Computer Appreciation</td>
-                                            <td>17</td>
-                                            <td><a href="/{{ Request::segment(1) }}/courses/details/98aa7373-4167-4d69-bf4e-05383774968e"
-                                                    class="btn btn-light btn-sm">View</a></td>
-                                        </tr>
+                                        @foreach ($courses as $course)
+                                            <tr>
+                                                <td>{{ $course->code }}</td>
+                                                <td>{{ $course->title }}</td>
+                                                <td></td>
+                                                <td><a href="/{{ Session::get('user_path') }}/courses/{{ $course->id }}"
+                                                        class="btn btn-light btn-sm">View</a></td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
