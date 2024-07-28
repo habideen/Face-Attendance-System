@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Imports\StudentImport;
+use App\Imports\StaffImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
-class LoadStudentController extends Controller
+class LoadStaffController extends Controller
 {
     public function index()
     {
-        return view('student.load_file')->with([
+        return view('staff.load_file')->with([
             'type' => 'Staff'
         ]);
     } //index
@@ -26,7 +26,7 @@ class LoadStudentController extends Controller
 
         if ($validator->fails()) vaidateErrorResponse($validator);
 
-        Excel::import(new StudentImport(), $request->users_file);
+        Excel::import(new StaffImport(), $request->users_file);
 
         uploadResponse();
     }

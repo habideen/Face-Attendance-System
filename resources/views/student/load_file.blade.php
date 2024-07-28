@@ -36,11 +36,11 @@
                                 </div>
                             </div>
 
-                            <form method="get">
+                            <form accept="/admin/load_student" method="post" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="row mb-4">
-                                    <x-form.input name="course_file" label="Select Excel File" type="file"
+                                    <x-form.input name="users_file" label="Select Excel File" type="file"
                                         accept=".xls, .xlsx, .csv" required='true' parentClass="mb-3 col-12"
                                         bottomInfo="Files: xls, xlsx and csv" placeholder="excel file" />
                                 </div>

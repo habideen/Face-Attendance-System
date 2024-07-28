@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Imports\StaffImport;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
 
 class StaffController extends Controller
@@ -164,28 +161,6 @@ class StaffController extends Controller
         if (!$save) responseSystemError();
 
         responseSuccess('Record was updated successfully.', '/admin/staff');
-    }
-
-
-    public function loadView()
-    {
-        return view('staff.load_file')->with([
-            'type' => 'Staff'
-        ]);
-    } //index
-
-
-    public function load(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'users_file' => ['required', 'mimes:xls,xlsx,csv']
-        ]);
-
-        if ($validator->fails()) vaidateErrorResponse($validator);
-
-        Excel::import(new StaffImport(), $request->users_file);
-
-        uploadResponse();
     }
 
     public function role(Request $request)
