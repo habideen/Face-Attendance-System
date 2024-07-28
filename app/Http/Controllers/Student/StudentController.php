@@ -108,9 +108,18 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        if (!Hash::check($request->password, Auth::user()->password))
+            responseError('Your password is invalid!');
+
+        $save = User::where('id', $id)
+            ->whereNotNull('is_student')
+            ->delete();
+
+        if (!$save) responseSystemError();
+
+        responseSuccess('Record was deleted successfully.', '/admin/students');
     }
 
     /**

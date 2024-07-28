@@ -148,9 +148,6 @@ class StaffController extends Controller
     {
         if (Auth::user()->id == $id) responseError('You cannot delete yourself!');
 
-        if (!$request->password)
-            responseError('Please enter your passwor');
-
         if (!Hash::check($request->password, Auth::user()->password))
             responseError('Your password is invalid!');
 
@@ -158,7 +155,7 @@ class StaffController extends Controller
 
         if (!$save) responseSystemError();
 
-        responseSuccess('Record was updated successfully.', '/admin/staff');
+        responseSuccess('Record was deleted successfully.', '/admin/staff');
     }
 
     public function role(Request $request)

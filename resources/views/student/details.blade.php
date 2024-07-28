@@ -101,12 +101,12 @@
                             <h4 class="card-title mb-5">Take Action</h4>
                             @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
                                 <button class="btn btn-danger me-4 mb-3" data-bs-toggle="modal"
-                                    data-bs-target="#deleteUserModal">Delete User</button>
+                                    data-bs-target="#deleteUserModal">Delete Student</button>
                             @endif
                             @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin' || Request::segment(1) == 'adviser')
                                 <button class="btn btn-primary me-4 mb-3" data-bs-toggle="modal"
                                     data-bs-target="#disableUserModal">{{ !$user->is_disabled ? 'Disable' : 'Enable' }}
-                                    User</button>
+                                    Student</button>
                             @endif
                             @if (Request::segment(1) == 'adviser')
                                 <button class="btn btn-success me-4 mb-3" data-bs-toggle="modal"
