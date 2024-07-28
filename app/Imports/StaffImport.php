@@ -3,15 +3,12 @@
 namespace App\Imports;
 
 use App\Models\User;
-use App\Rules\ValidAcademicSession;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Str;
 
-class UsersImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements ToModel, WithHeadingRow
+class StaffImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements ToModel, WithHeadingRow
 {
     /**
      * @param array $row

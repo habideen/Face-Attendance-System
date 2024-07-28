@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Imports\UsersImport;
+use App\Imports\StaffImport;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -183,7 +183,7 @@ class StaffController extends Controller
 
         if ($validator->fails()) vaidateErrorResponse($validator);
 
-        Excel::import(new UsersImport(), $request->users_file);
+        Excel::import(new StaffImport(), $request->users_file);
 
         uploadResponse();
     }
