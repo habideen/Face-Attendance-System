@@ -67,7 +67,13 @@ class CoursesController extends Controller
      */
     public function show(string $id)
     {
-        return view('course.details');
+        $course = Course::find($id);
+
+        if (!$course) responseError('The course does not exist!');
+
+        return view('course.details')->with(([
+            'course' => $course
+        ]));
     }
 
     /**

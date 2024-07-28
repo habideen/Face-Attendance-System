@@ -35,6 +35,7 @@
                                 @csrf
                                 @isset($course)
                                     @method('PATCH')
+                                    <input type="hidden" name="id" value="{{ $course->id }}">
                                 @endisset
 
                                 <div class="row mb-4">

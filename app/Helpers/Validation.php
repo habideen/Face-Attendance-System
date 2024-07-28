@@ -42,7 +42,7 @@ if (!function_exists('validateCourseRequest')) {
   function validateCourseRequest($data)
   {
     return Validator::make($data, [
-      'id' => ['nullable', 'exists:users,id'],
+      'id' => ['nullable', 'exists:courses,id'],
       'code' => [
         'required', 'string', 'min:6', 'max:20', 'regex:/^[a-zA-Z]{3,3}[\s]*[0-9]{3,3}$/',
         Rule::unique('courses', 'code')->ignore($data['id'] ?? '', 'id')

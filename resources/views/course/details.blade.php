@@ -15,7 +15,8 @@
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/{{ Request::segment(1) }}/dashboard">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="/{{ Session::get('user_path') }}/dashboard">Dashboard</a>
+                                </li>
                                 <li class="breadcrumb-item active">Course Details</li>
                             </ol>
                         </div>
@@ -34,15 +35,15 @@
                                 <tbody>
                                     <tr>
                                         <td>Course Code:</td>
-                                        <td>CSC501</td>
+                                        <td>{{ $course->code }}</td>
                                     </tr>
                                     <tr>
                                         <td>Course Title:</td>
-                                        <td>Introduction to Networking</td>
+                                        <td>{{ $course->title }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Session:</td>
-                                        <td>2019/2020</td>
+                                        <td>Current Session:</td>
+                                        <td>{{ Session::get('academic_session') }}</td>
                                     </tr>
                                     <tr>
                                         <td>First Attendance:</td>
@@ -54,7 +55,15 @@
                                     </tr>
                                     <tr>
                                         <td>Number of Attendance:</td>
-                                        <td>15</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Created At:</td>
+                                        <td>{{ date('d M, Y h:i a', strtotime($course->created_at)) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Updted At:</td>
+                                        <td>{{ date('d M, Y h:i a', strtotime($course->updated_at)) }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -67,7 +76,7 @@
                             <h4 class="card-title mb-4">
                                 <div class="d-flex">
                                     <div>Lecturer</div>
-                                    @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+                                    @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
                                         <div class="ms-auto">
                                             <button class="btn btn-primary me-4 btn-sm mb-3" data-bs-toggle="modal"
                                                 data-bs-target="#addLecturerModal">Add Lecturer</button>
@@ -81,17 +90,17 @@
                                     <tr>
                                         <th>Taken By</th>
                                         <th>Created At</th>
-                                        @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+                                        @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
                                             <th>Action</th>
                                         @endif
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><a href="/{{ Request::segment(1) }}/staff/details/98aa7373-4167-4d69-bf4e-05383774968e"
+                                        <td><a href="/{{ Session::get('user_path') }}/staff/details/98aa7373-4167-4d69-bf4e-05383774968e"
                                                 target="_blank">Prof AKINRINDE Olakilekun Ajanlekoko</a></td>
                                         <td>25 May, 2024 11:51 PM</td>
-                                        @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+                                        @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
                                             <td><button class="btn btn-danger me-4 btn-sm mb-3" data-bs-toggle="modal"
                                                     data-bs-target="#removeLecturerModal">Remove Lecturer</button></td>
                                         @endif
@@ -118,9 +127,9 @@
                                     <tr>
                                         <td>25 May, 2024</td>
                                         <td>11:51 PM</td>
-                                        <td><a href="/{{ Request::segment(1) }}/staff/details/98aa7373-4167-4d69-bf4e-05383774968e"
+                                        <td><a href="/{{ Session::get('user_path') }}/staff/details/98aa7373-4167-4d69-bf4e-05383774968e"
                                                 target="_blank">Prof AKINRINDE Olakilekun Ajanlekoko</a></td>
-                                        <td><a href="/{{ Request::segment(1) }}/courses/attendance/98aa7373-4167-4d69-bf4e-05383774968e"
+                                        <td><a href="/{{ Session::get('user_path') }}/courses/attendance/98aa7373-4167-4d69-bf4e-05383774968e"
                                                 class="btn btn-light btn-sm">View attendance</a></td>
                                     </tr>
                                 </tbody>
@@ -132,14 +141,15 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-5">Take Action</h4>
-                            @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+                            @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
                                 <button class="btn btn-danger me-4">Delete Course</button>
-                                <button class="btn btn-primary me-4">Edit Course</button>
+                                <a href="/{{ Session::get('user_path') }}/courses/{{ $course->id }}/edit"
+                                    class="btn btn-primary me-4">Edit Course</a>
                             @endif
-                            <a href="/{{ Request::segment(1) }}/courses/attendance/summary/CSC501"
+                            <a href="/{{ Session::get('user_path') }}/courses/attendance/summary/CSC501"
                                 class="btn btn-success me-4">View
                                 Attendance Summary</a>
-                            @if (Request::segment(1) == 'lecturer')
+                            @if (Session::get('user_path') == 'lecturer')
                                 <button class="btn btn-danger me-4" data-bs-toggle="modal"
                                     data-bs-target="#takeAttendanceModal">Take Attendance</button>
                             @endif
@@ -154,7 +164,7 @@
     </div>
     <!-- End Page-content -->
 
-    @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+    @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
         <!-- Static Backdrop Modal -->
         <div class="modal fade" id="addLecturerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             role="dialog" aria-labelledby="addLecturerModalLabel" aria-hidden="true">
@@ -226,7 +236,7 @@
         </div>
     @endif
 
-    @if (Request::segment(1) == 'lecturer')
+    @if (Session::get('user_path') == 'lecturer')
         <!-- Static Backdrop Modal -->
         <div class="modal fade" id="takeAttendanceModal" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" role="dialog" aria-labelledby="takeAttendanceModalLabel" aria-hidden="true">
