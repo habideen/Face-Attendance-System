@@ -7,7 +7,6 @@ use App\Http\Controllers\Course\LoadCourseController;
 use App\Http\Controllers\Course\ManageCourseConroller;
 use App\Http\Controllers\ProfileSettings\PasswordController;
 use App\Http\Controllers\ProfileSettings\ProfileController;
-use App\Http\Controllers\Settings\SessionController;
 use App\Http\Controllers\Staff\ClassAdviserController;
 use App\Http\Controllers\Staff\LoadStaffController;
 use App\Http\Controllers\Staff\StaffController;
@@ -32,23 +31,13 @@ Route::prefix('admin')->group(function () {
   Route::get('profile', [ProfileController::class, 'index']);
   Route::get('password', [PasswordController::class, 'index']);
 
-  Route::get('session', [SessionController::class, 'index']);
-
-  Route::prefix('coursesXXXXX')->group(function () {
-    Route::get('/', [CoursesController::class, 'index']);
-    Route::get('add_course', [AddCourseController::class, 'index']);
-    Route::get('load_course', [LoadCourseController::class, 'index']);
-    Route::post('load_course', [LoadCourseController::class, 'load']);
-    Route::get('details/{course_code}', [CoursesController::class, 'details']);
-    Route::get('attendance/{id}', [AttendanceController::class, 'index']);
-    Route::get('attendance/summary/{course_code}', [AttendanceController::class, 'summary']);
-  });
-
   Route::prefix('courses')->group(function () {
     Route::get('load_course', [LoadCourseController::class, 'index']);
     Route::post('load_course', [LoadCourseController::class, 'load']);
     Route::get('add_lecturer/{id}', [ManageCourseConroller::class, 'addLecturerView']);
     Route::post('add_lecturer/{id}', [ManageCourseConroller::class, 'addLecturer']);
+    Route::get('attendance/{id}', [AttendanceController::class, 'index']);
+    Route::get('attendance/summary/{course_code}', [AttendanceController::class, 'summary']);
   });
   Route::resource('courses', CoursesController::class);
 
@@ -68,12 +57,4 @@ Route::prefix('admin')->group(function () {
     Route::post('{id}/disable', [StudentController::class, 'disable']);
   });
   Route::resource('students', StudentController::class);
-
-
-  // Route::prefix('students')->group(function () {
-  //   Route::get('/', [StudentController::class, 'index']);
-  //   Route::get('add_student', [AddStudentController::class, 'index']);
-  //   Route::get('load_student', [LoadStudentController::class, 'index']);
-  //   Route::get('details/{staff_id}', [StudentController::class, 'details']);
-  // });
 });

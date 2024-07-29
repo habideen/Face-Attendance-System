@@ -1,14 +1,9 @@
-@php
-    $accountType = '';
-@endphp
-
-
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box text-lg-start">
-                <a href="/{{ $accountType }}/dashboard" class="logo logo-light">
+                <a href="/{{ Session::get('user_path') }}/dashboard" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="/assets/images/logo.png" alt="" height="22">
                     </span>
@@ -63,13 +58,12 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar.jpg"
                         alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-1"
-                        key="t-loggedUser">{{ Auth::user()->first_name ?? 'Adesile' }}</span>
+                    <span class="d-none d-xl-inline-block ms-1" key="t-loggedUser">{{ Auth::user()->sname }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="/{{ $accountType }}/password"><i
+                    <a class="dropdown-item" href="/{{ Session::get('user_path') }}/password"><i
                             class="bx bx-key font-size-16 align-middle me-1"></i> <span
                             key="t-password">Password</span></a>
                     <div class="dropdown-divider"></div>

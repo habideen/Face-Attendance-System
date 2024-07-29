@@ -19,7 +19,8 @@
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/{{ Request::segment(1) }}/dashboard">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="/{{ Session::get('user_path') }}/dashboard">Dashboard</a>
+                                </li>
                                 <li class="breadcrumb-item active">Student Details</li>
                             </ol>
                         </div>
@@ -86,7 +87,7 @@
                                         <td>17</td>
                                         <td>
                                             <a href="javascript: void(0)"
-                                                hredf="/{{ Request::segment(1) }}/courses/details/98aa7373-4167-4d69-bf4e-05383774968e"
+                                                hredf="/{{ Session::get('user_path') }}/courses/details/98aa7373-4167-4d69-bf4e-05383774968e"
                                                 class="btn btn-light btn-sm">Attendance</a>
                                         </td>
                                     </tr>
@@ -99,16 +100,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-5">Take Action</h4>
-                            @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+                            @if (Auth::user()->is_admin)
                                 <button class="btn btn-danger me-4 mb-3" data-bs-toggle="modal"
                                     data-bs-target="#deleteUserModal">Delete Student</button>
                             @endif
-                            @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin' || Request::segment(1) == 'adviser')
+                            @if (Auth::user()->is_admin || Auth::user()->is_adviser)
                                 <button class="btn btn-primary me-4 mb-3" data-bs-toggle="modal"
                                     data-bs-target="#disableUserModal">{{ !$user->is_disabled ? 'Disable' : 'Enable' }}
                                     Student</button>
                             @endif
-                            @if (Request::segment(1) == 'adviser')
+                            @if (Auth::user()->is_adviser)
                                 <button class="btn btn-success me-4 mb-3" data-bs-toggle="modal"
                                     data-bs-target="#enrolFaceModal">Enrol Face</button>
                             @endif
@@ -124,15 +125,15 @@
     <!-- End Page-content -->
 
     <!-- Static Backdrop Modal -->
-    @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin' || Request::segment(1) == 'adviser')
+    @if (Auth::user()->is_admin || Auth::user()->is_adviser)
         @include('components.modal.disable_user')
     @endif
 
-    @if (Request::segment(1) == 'admin' || Request::segment(1) == 'super-admin')
+    @if (Auth::user()->is_admin)
         @include('components.modal.delete_user')
     @endif
 
-    @if (Request::segment(1) == 'adviser')
+    @if (Auth::user()->is_adviser)
         @include('components.modal.enrol_face')
     @endif
 @endsection
@@ -154,4 +155,9 @@
     <script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
     <!-- Datatable init js -->
     <script src="/assets/js/pages/datatables.init.js"></script>
+    @if (Auth::user()->is_adviser)
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
+        <script src="/test/script.js"></script>
+    @endif
 @endsection

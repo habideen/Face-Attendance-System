@@ -7,8 +7,8 @@ async function setupCamera() {
     video.srcObject = stream;
     video.style.display = "block";
     document.getElementById("start").style.display = "none";
-    document.getElementById("stop").style.display = "block";
-    document.getElementById("capture").style.display = "block";
+    document.getElementById("stop").style.display = "inline-block";
+    document.getElementById("capture").style.display = "inline-block";
 
     video.addEventListener("loadedmetadata", () => {
         const overlay = document.getElementById("overlay");
@@ -25,7 +25,7 @@ function stopCamera() {
     const tracks = stream.getTracks();
     tracks.forEach((track) => track.stop());
     video.style.display = "none";
-    document.getElementById("start").style.display = "block";
+    document.getElementById("start").style.display = "inline-block";
     document.getElementById("stop").style.display = "none";
     document.getElementById("capture").style.display = "none";
     clearCanvas();
@@ -33,7 +33,7 @@ function stopCamera() {
 }
 
 async function loadModels() {
-    await faceapi.nets.tinyFaceDetector.loadFromUri("/models"); // Ensure the models are in this directory
+    await faceapi.nets.tinyFaceDetector.loadFromUri("/test/models"); // Ensure the models are in this directory
 }
 
 async function detectFace(video) {

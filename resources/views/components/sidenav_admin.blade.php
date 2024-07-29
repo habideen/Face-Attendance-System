@@ -53,12 +53,6 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="/{{ Session::get('user_path') }}/session" class="waves-effect">
-                        <i class="bx bx-timer"></i>
-                        <span key="t-profile">Set Session</span>
-                    </a>
-                </li>
 
                 <li class="menu-title" key="t-pages">Settings</li>
                 <li>
