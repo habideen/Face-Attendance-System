@@ -55,32 +55,48 @@
                             <canvas id="overlay"></canvas>
                             <canvas id="canvas" class="d-nodne"></canvas>
                         </div>
+                        <div class="mt-2">
+                            <button type="button" id="start" class="btn btn-light waves-effect waves-light"><i
+                                    class='mdi mdi-play me-2'></i> Start Camera</button>
+                            <button type="button" id="stop" style="display:none;margin-bottom:20px;"
+                                class="btn btn-danger waves-effect waves-light"><i class='mdi mdi-stop'></i>
+                                Stop
+                                Camera</button>
+                            <button type="button" id="capture" style="display:none;margin-bottom:20px;"
+                                class="btn btn-primary waves-effect waves-light"><i
+                                    class='mdi mdi-camera-enhance me-2'></i>
+                                Capture</button>
+                        </div>
                     </div>
                     <div class="col-sm-1"></div>
                     <div class="col-sm-12 col-md-5 col-lg-7 mt-5 mt-md-0">
+                        <div id="server_response" class="h5"></div>
                         <table class="table table-hover">
                             <tbody>
                                 <tr>
                                     <td>Name:</td>
-                                    <td id="checked_name">AJANLEKOKO Ojetunji Fiditi</td>
+                                    <td id="checked_name"></td>
                                 </tr>
                                 <tr>
                                     <td>Matric No.:</td>
-                                    <td id="checked_school_id">CSS/1954/###</td>
+                                    <td id="checked_school_id"></td>
                                 </tr>
                                 <tr>
                                     <td>Department:</td>
-                                    <td id="checked_department">Computer Science</td>
+                                    <td id="checked_department"></td>
+                                </tr>
+                                <tr>
+                                    <td>Similarity %:</td>
+                                    <td id="checked_similarity"></td>
                                 </tr>
                                 <tr>
                                     <td>Status:</td>
-                                    <td id="checked_is_disabled">Student Disabled</td>
+                                    <td id="checked_is_disabled"></td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <form action="" method="post">
-                                            <input type="text" name="student_id" id="checked_student_id">
-                                            {{-- <input type="text" name="session_course_id" value="{{ $sessionCourseId }}"> --}}
+                                        <form method="post" onsubmit="takeAttendance()">
+                                            <input type="hidden" name="student_id" id="checked_student_id">
                                             <x-form.button
                                                 defaultText="<i class='mdi mdi-calendar-check me-2'></i> Mark Attendance"
                                                 class="btn-lg btn-primary" />
@@ -90,16 +106,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <button type="button" id="start" class="btn btn-light waves-effect waves-light"><i
-                                class='mdi mdi-play me-2'></i> Start Camera</button>
-                        <button type="button" id="stop" style="display:none;"
-                            class="btn btn-danger waves-effect waves-light"><i class='mdi mdi-stop me-2'></i> Stop
-                            Camera</button>
-                        <button type="button" id="capture" style="display:none;"
-                            class="btn btn-primary waves-effect waves-light"><i class='mdi mdi-camera-enhance me-2'></i>
-                            Capture</button>
                     </div>
                 </div>
             </div>

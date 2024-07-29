@@ -40,8 +40,8 @@ Route::prefix('lecturer')->group(function () {
   //   Route::get('details/{staff_id}', [StudentController::class, 'details']);
   // });
   Route::prefix('students')->group(function () {
-    Route::get('check_face', [AttendanceController::class, 'checkFace']);
     Route::post('check_face', [AttendanceController::class, 'checkFace']);
+    Route::post('take_attendance', [AttendanceController::class, 'takeAttendance']);
   });
   Route::resource('students', StudentController::class)->except('create', 'store', 'destroy');
 });

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\AWSRekognition\AttendanceController as AWSRekognitionAttendanceController;
 use App\Http\Controllers\Controller;
+use App\Models\CourseAttendance;
+use App\Models\IndividualAttendance;
 use App\Models\SessionCourse;
 use App\Models\User;
 use App\Rules\Base64Image;
@@ -11,7 +13,9 @@ use App\Services\RekognitionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AttendanceController extends Controller
 {
@@ -65,10 +69,6 @@ class AttendanceController extends Controller
 
     public function checkFace(Request $request)
     {
-        // return response()->json([
-        //     'status' => 'failed',
-        //     // 'message' => $enroll->status
-        // ]);
         $validator = Validator::make($request->all(), [
             'image' => ['required', new Base64Image]
         ]);
@@ -136,8 +136,92 @@ class AttendanceController extends Controller
     }
 
 
+    private function individualAttendance()
+    {
+        $record = CourseAttendance::select('id')
+            ->where('session_course_id', Session::get('session_course_id'))
+            ->where('lecturer_id', Session::get('this_lecturer'))
+            ->whereDate('created_at', now())
+            ->first();
+
+        if ($record) {
+            return $record->id;
+        }
+
+        $id = Str::uuid();
+        $save = new CourseAttendance;
+        $save->id = $id;
+        $save->session_course_id =  Session::get('session_course_id');
+        $save->lecturer_id =  Session::get('this_lecturer');
+        $save->save();
+
+        if (!$save) responseError('System error! We could not establish a valid attendance.');
+        return $id;
+    }
+
+
     public function takeAttendance(Request $request)
     {
-        
+        $validator = Validator::make($request->all(), [
+            'student_id' => [
+                'required', 'exists:users,id',
+                function ($attribute, $value, $fail) {
+                    $user = User::select('is_disabled')->where('id', $value)->first();
+                    if ($user && $user->is_disabled == 1) {
+                        $fail('The selected user is disabled.');
+                    }
+                },
+            ]
+        ]);
+
+        $message = '';
+
+        if ($validator->fails()) {
+            $message = 'Invalid user submitted!';
+        } elseif (!Session::get('session_course_id') || !Session::get('this_lecturer')) {
+            $message = 'You are not authorized to take this attendance!';
+        }
+
+        if ($message) return response()->json([
+            'status' => 'failed',
+            'message' => $message,
+            'similarity' => '',
+            'faceId' => '',
+            'student_id' => '',
+            'student_name' => '',
+            'school_id' => '',
+            'department' => '',
+            'is_disabled' => '',
+        ]);
+
+        $attendanceID = $this->individualAttendance();
+
+        // prevent double attendance
+        $save = IndividualAttendance::select('id')
+            ->where('course_attendance_id', $attendanceID)
+            ->where('user_id', $request->student_id)
+            ->first();
+
+        if (!$save) {
+            $save = new IndividualAttendance;
+            $save->id = Str::uuid();
+            $save->user_id =  $request->student_id;
+            $save->course_attendance_id =  $attendanceID;
+            $save->save();
+        }
+
+        if (!$save) responseError('System error! We could not mark this attendance. Please try again.');
+
+        return response()->json([
+            'status' => 'successful',
+            'message' => 'Attendance marked successfully.',
+            'similarity' => '',
+            'faceId' => '',
+            'student_id' => '',
+            'student_name' => '',
+            'school_id' => '',
+            'department' => '',
+            'is_disabled' => '',
+        ]);
     }
 }

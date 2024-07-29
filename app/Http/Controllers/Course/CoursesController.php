@@ -98,15 +98,15 @@ class CoursesController extends Controller
             ->where('session_courses.course_id', $id)
             ->get();
 
-        // needed to prevent unauthoriced attendance    
-        Session::put('session_course_id', null);
-        Session::put('this_lecturer', null);
-
         $this_lecturer = $courseLecturers->where('id', Auth::user()->id)->first();
         if ($this_lecturer) {
             // used to query when marking attendance
             Session::put('session_course_id', $this_lecturer->session_course_id);
             Session::put('this_lecturer', $this_lecturer->id);
+        } else {
+            // needed to prevent unauthoriced attendance    
+            Session::put('session_course_id', null);
+            Session::put('this_lecturer', null);
         }
 
         return view('course.details')->with(([

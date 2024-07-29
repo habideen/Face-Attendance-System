@@ -11,6 +11,8 @@ async function setupCamera() {
     document.getElementById("stop").style.display = "inline-block";
     document.getElementById("capture").style.display = "inline-block";
 
+    $("#server_response").html("");
+
     video.addEventListener("loadedmetadata", () => {
         const overlay = document.getElementById("overlay");
         overlay.width = video.videoWidth;
@@ -124,7 +126,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const detection = await detectFace(canvas);
         if (detection) {
             const croppedFace = cropFace(canvas, detection);
-            faceResult = croppedFace;
             stopCamera();
             confirmFace(croppedFace);
         } else {
@@ -135,15 +136,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function confirmFace(croppedFace) {
     $.ajax({
-        url: postUrl, // Replace with your server endpoint
+        url: checkFaceURL,
         method: "POST",
         data: {
             _token: csrf_token,
             image: croppedFace,
         },
         success: function (response) {
-            // console.log(response); // Handle the JSON response from the server
-            // alert("Face data sent successfully!");
             CheckedData(response);
         },
         error: function (error) {
@@ -154,11 +153,46 @@ function confirmFace(croppedFace) {
 }
 
 function CheckedData(response) {
+    $("#server_response").html(response.message);
+
+    if (response.status == "failed") return;
+
     $("#checked_name").html(response.student_name);
     $("#checked_school_id").html(response.school_id);
     $("#checked_department").html(response.department);
     $("#checked_is_disabled").html(
         response.is_disabled ? "Student disabled" : "Student enabled"
     );
+    $("#checked_similarity").html(response.similarity);
     $("#checked_student_id").val(response.student_id);
+
+    if (response.student_name == "") {
+        $("#checked_is_disabled").html("");
+    }
+}
+
+function takeAttendance() {
+    event.preventDefault();
+
+    var student_id = $("#checked_student_id").val();
+    if (student_id == "") {
+        alert("Please scan a proper face!");
+        return;
+    }
+
+    $.ajax({
+        url: takeAttendanceURL,
+        method: "POST",
+        data: {
+            _token: csrf_token,
+            student_id: student_id,
+        },
+        success: function (response) {
+            CheckedData(response);
+        },
+        error: function (error) {
+            console.error(error);
+            alert("Error sending face data to the server.");
+        },
+    });
 }

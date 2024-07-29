@@ -224,11 +224,12 @@
             });
         </script>
     @endif
-    @if (Session::get('user_path') == 'lecturer')
+    @if (Session::get('session_course_id') && Session::get('this_lecturer'))
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
         <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
         <script>
-            var postUrl = '/{{ Session::get('user_path') }}/students/check_face';
+            var checkFaceURL = '/{{ Session::get('user_path') }}/students/check_face';
+            var takeAttendanceURL = '/{{ Session::get('user_path') }}/students/take_attendance';
             var csrf_token = '{{ csrf_token() }}';
         </script>
         <script src="/test/script_attendance.js"></script>
