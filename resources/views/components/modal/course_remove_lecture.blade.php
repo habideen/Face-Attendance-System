@@ -8,12 +8,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="get" class="mt-5 mb-3">
+                <form method="post" action="/{{Session::get('user_path')}}/courses/remove_lecturer" class="mt-5 mb-3">
                     @csrf
+                    @method('DELETE')
 
                     <input type="hidden" name="user_id" id="user_id">
                     <p class="h4 text-center">Remove this lecturer from this course?</p>
-                    <p id="user_fullname" class="text-center">Prof AKINRINDE Olakilekun Ajanlekoko</p>
+                    <p id="school_id" class="text-center mt-4 mb-1"></p>
+                    <p id="user_fullname" class="text-center h5"></p>
 
                     <div class="row mb-4">
                         <x-form.input name="password" label="Password" type="password" required='true'

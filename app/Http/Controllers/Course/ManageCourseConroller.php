@@ -8,6 +8,8 @@ use App\Models\CourseLecturer;
 use App\Models\SessionCourse;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -89,5 +91,18 @@ class ManageCourseConroller extends Controller
         if (!$save) responseError('System Error! We could not add this lecturer!');
 
         responseSuccess('Lecturer added to this course successfully.');
+    }
+
+
+    public function removeLecturer(Request $request)
+    {
+        if (!Hash::check($request->password, Auth::user()->password))
+            responseError('Your password is invalid!');
+
+        $delete = CourseLecturer::where('id', $request->user_id)->delete();
+
+        if (!$delete) responseError('System error! We could not delete the lecturer.');
+
+        responseSuccess('The lecturer was deleted successfully');
     }
 }

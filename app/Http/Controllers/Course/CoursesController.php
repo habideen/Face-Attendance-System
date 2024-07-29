@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseLecturer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class CoursesController extends Controller
@@ -78,8 +80,25 @@ class CoursesController extends Controller
 
         if (!$course) responseError('The course does not exist!');
 
+        $courseLecturers = CourseLecturer::select(
+            'users.id',
+            'users.school_id',
+            'users.title',
+            'users.sname',
+            'users.fname',
+            'users.mname',
+            'course_lecturers.id AS course_lecturer_id',
+            'course_lecturers.created_at'
+        )
+            ->join('session_courses', 'session_courses.id', '=', 'course_lecturers.session_course_id')
+            ->join('courses', 'courses.id', '=', 'session_courses.course_id')
+            ->join('users', 'users.id', '=', 'course_lecturers.user_id')
+            ->where('session_courses.session', Session::get('academic_session'))
+            ->get();
+
         return view('course.details')->with(([
-            'course' => $course
+            'course' => $course,
+            'courseLecturers' => $courseLecturers
         ]));
     }
 

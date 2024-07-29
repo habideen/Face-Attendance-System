@@ -96,15 +96,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><a href="/{{ Session::get('user_path') }}/staff/details/98aa7373-4167-4d69-bf4e-05383774968e"
-                                                target="_blank">Prof AKINRINDE Olakilekun Ajanlekoko</a></td>
-                                        <td>25 May, 2024 11:51 PM</td>
-                                        @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
-                                            <td><button class="btn btn-danger me-4 btn-sm mb-3" data-bs-toggle="modal"
-                                                    data-bs-target="#removeLecturerModal">Remove Lecturer</button></td>
-                                        @endif
-                                    </tr>
+                                    @foreach ($courseLecturers as $lecturer)
+                                        <tr>
+                                            <td><a href="/{{ Session::get('user_path') }}/staff/{{ $lecturer->id }}"
+                                                    target="_blank">{{ $lecturer->title . ' ' . $lecturer->sname . ' ' . $lecturer->fname . ' ' . $lecturer->mname }}</a>
+                                            </td>
+                                            <td>25 May, 2024 11:51 PM</td>
+                                            @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
+                                                <td><button class="btn btn-danger me-4 btn-sm mb-3" data-bs-toggle="modal"
+                                                        data-bs-target="#removeLecturerModal"
+                                                        data-lecturer-course-id="{{ $lecturer->course_lecturer_id }}"
+                                                        data-lecturer-school_id="{{ $lecturer->school_id }}"
+                                                        data-lecturer-name="{{ $lecturer->title . ' ' . $lecturer->sname . ' ' . $lecturer->fname . ' ' . $lecturer->mname }}">Remove
+                                                        Lecturer</button></td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -192,4 +199,27 @@
     <script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
     <!-- Datatable init js -->
     <script src="/assets/js/pages/datatables.init.js"></script>
+
+    @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var removeLecturerModal = document.getElementById('removeLecturerModal');
+                removeLecturerModal.addEventListener('show.bs.modal', function(event) {
+                    var button = event.relatedTarget; // Button that triggered the modal
+                    var lecturerId = button.getAttribute('data-lecturer-course-id');
+                    var lecturerName = button.getAttribute('data-lecturer-name');
+                    var lecturerSchoolID = button.getAttribute('data-lecturer-school_id');
+
+                    // Update the modal's content.
+                    var modalBodyId = removeLecturerModal.querySelector('#user_id');
+                    var modalBodyName = removeLecturerModal.querySelector('#user_fullname');
+                    var modalBodySchoolID = removeLecturerModal.querySelector('#school_id');
+
+                    modalBodyId.value = lecturerId;
+                    modalBodyName.textContent = lecturerName;
+                    modalBodySchoolID.textContent = lecturerSchoolID;
+                });
+            });
+        </script>
+    @endif
 @endsection

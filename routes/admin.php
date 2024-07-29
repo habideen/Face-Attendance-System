@@ -36,6 +36,7 @@ Route::prefix('admin')->group(function () {
     Route::post('load_course', [LoadCourseController::class, 'load']);
     Route::get('add_lecturer/{id}', [ManageCourseConroller::class, 'addLecturerView']);
     Route::post('add_lecturer/{id}', [ManageCourseConroller::class, 'addLecturer']);
+    Route::delete('remove_lecturer', [ManageCourseConroller::class, 'removeLecturer']);
     Route::get('attendance/{id}', [AttendanceController::class, 'index']);
     Route::get('attendance/summary/{course_code}', [AttendanceController::class, 'summary']);
   });

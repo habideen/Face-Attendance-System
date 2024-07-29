@@ -41,6 +41,7 @@ Route::prefix('test')->group(function () {
 
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('login', [LoginController::class, 'index']);
 Route::post('login', [LoginController::class, 'login']);
 Route::get('logout', [LogoutController::class, 'logout']);
 Route::get('forgot_password', [ForgotPasswordController::class, 'index']);
