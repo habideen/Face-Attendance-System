@@ -157,9 +157,11 @@
                             <a href="/{{ Session::get('user_path') }}/courses/attendance/summary/CSC501"
                                 class="btn btn-success me-4">View
                                 Attendance Summary</a>
-                            @if (Session::get('user_path') == 'lecturer')
+                            @if (Session::get('session_course_id') && Session::get('this_lecturer'))
                                 <button class="btn btn-danger me-4" data-bs-toggle="modal"
                                     data-bs-target="#takeAttendanceModal">Take Attendance</button>
+                            @else
+                                <button class="btn btn-danger me-4" disabled>Not Authorized to take attendance</button>
                             @endif
                         </div>
                     </div>
@@ -177,7 +179,7 @@
         @include('components.modal.course_delete')
     @endif
 
-    @if (Session::get('user_path') == 'lecturer')
+    @if (Session::get('session_course_id') && Session::get('this_lecturer'))
         @include('components.modal.take_attendance')
     @endif
 @endsection
@@ -225,6 +227,10 @@
     @if (Session::get('user_path') == 'lecturer')
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
         <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
+        <script>
+            var postUrl = '/{{ Session::get('user_path') }}/students/check_face';
+            var csrf_token = '{{ csrf_token() }}';
+        </script>
         <script src="/test/script_attendance.js"></script>
         <script></script>
     @endif

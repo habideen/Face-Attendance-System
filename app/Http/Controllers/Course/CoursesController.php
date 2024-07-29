@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Course;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseLecturer;
+use App\Models\SessionCourse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,7 +78,6 @@ class CoursesController extends Controller
     public function show(string $id)
     {
         $course = Course::find($id);
-
         if (!$course) responseError('The course does not exist!');
 
         $courseLecturers = CourseLecturer::select(
@@ -88,7 +88,8 @@ class CoursesController extends Controller
             'users.fname',
             'users.mname',
             'course_lecturers.id AS course_lecturer_id',
-            'course_lecturers.created_at'
+            'course_lecturers.created_at',
+            'session_courses.id AS session_course_id'
         )
             ->join('session_courses', 'session_courses.id', '=', 'course_lecturers.session_course_id')
             ->join('courses', 'courses.id', '=', 'session_courses.course_id')
@@ -97,9 +98,20 @@ class CoursesController extends Controller
             ->where('session_courses.course_id', $id)
             ->get();
 
+        // needed to prevent unauthoriced attendance    
+        Session::put('session_course_id', null);
+        Session::put('this_lecturer', null);
+
+        $this_lecturer = $courseLecturers->where('id', Auth::user()->id)->first();
+        if ($this_lecturer) {
+            // used to query when marking attendance
+            Session::put('session_course_id', $this_lecturer->session_course_id);
+            Session::put('this_lecturer', $this_lecturer->id);
+        }
+
         return view('course.details')->with(([
             'course' => $course,
-            'courseLecturers' => $courseLecturers
+            'courseLecturers' => $courseLecturers,
         ]));
     }
 

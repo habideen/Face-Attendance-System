@@ -74,6 +74,7 @@ async function autoCaptureFace() {
         const croppedFace = cropFace(canvas, detection);
         faceResult = croppedFace;
         stopCamera();
+        confirmFace(croppedFace);
     } else {
         alert("No face detected!");
     }
@@ -125,8 +126,39 @@ document.addEventListener("DOMContentLoaded", async () => {
             const croppedFace = cropFace(canvas, detection);
             faceResult = croppedFace;
             stopCamera();
+            confirmFace(croppedFace);
         } else {
             alert("No face detected!");
         }
     });
 });
+
+function confirmFace(croppedFace) {
+    $.ajax({
+        url: postUrl, // Replace with your server endpoint
+        method: "POST",
+        data: {
+            _token: csrf_token,
+            image: croppedFace,
+        },
+        success: function (response) {
+            // console.log(response); // Handle the JSON response from the server
+            // alert("Face data sent successfully!");
+            CheckedData(response);
+        },
+        error: function (error) {
+            console.error(error);
+            alert("Error sending face data to the server.");
+        },
+    });
+}
+
+function CheckedData(response) {
+    $("#checked_name").html(response.student_name);
+    $("#checked_school_id").html(response.school_id);
+    $("#checked_department").html(response.department);
+    $("#checked_is_disabled").html(
+        response.is_disabled ? "Student disabled" : "Student enabled"
+    );
+    $("#checked_student_id").val(response.student_id);
+}

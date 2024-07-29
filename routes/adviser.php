@@ -37,6 +37,7 @@ Route::prefix('adviser')->group(function () {
 
   Route::prefix('students')->group(function () {
     Route::post('enroll/{student_id}', [AttendanceController::class, 'enroll']);
+    Route::post('check_face', [AttendanceController::class, 'checkFace']);
   });
   Route::resource('students', StudentController::class)->except('create', 'store', 'destroy');
 });

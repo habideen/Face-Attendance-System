@@ -6,10 +6,12 @@ use App\Http\Controllers\AWSRekognition\AttendanceController as AWSRekognitionAt
 use App\Http\Controllers\Controller;
 use App\Models\SessionCourse;
 use App\Models\User;
+use App\Rules\Base64Image;
 use App\Services\RekognitionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AttendanceController extends Controller
 {
@@ -58,5 +60,84 @@ class AttendanceController extends Controller
         if (!$update) responseError('We could not register this face. Please try again!');
 
         responseSuccess('Face enrolment successful.');
+    }
+
+
+    public function checkFace(Request $request)
+    {
+        // return response()->json([
+        //     'status' => 'failed',
+        //     // 'message' => $enroll->status
+        // ]);
+        $validator = Validator::make($request->all(), [
+            'image' => ['required', new Base64Image]
+        ]);
+
+        if ($validator->fails()) responseError('The image format is invalid');
+
+        $rekognition = new RekognitionService;
+        $object = new AWSRekognitionAttendanceController($rekognition);
+        $enroll = $object->checkAttendance($request)->getData();
+
+        if ($enroll->status == 'Match not found') {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $enroll->status,
+                'similarity' => '',
+                'faceId' => '',
+                'student_id' => '',
+                'student_name' => '',
+                'school_id' => '',
+                'department' => '',
+                'is_disabled' => '',
+            ]);
+        }
+
+        $user = User::select(
+            'users.id',
+            'users.school_id',
+            'users.title',
+            'users.sname',
+            'users.fname',
+            'users.mname',
+            'users.is_disabled',
+            'departments.department'
+        )
+            ->join('departments', 'departments.id', '=', 'users.department_id')
+            ->whereNotNull('is_student')
+            ->where('face_enrolled', $enroll->data[0]->Face->FaceId)
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Face still exist but the student record no longer exist!',
+                'similarity' => '',
+                'faceId' => '',
+                'student_id' => '',
+                'student_name' => '',
+                'school_id' => '',
+                'department' => '',
+                'is_disabled' => '',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'successful',
+            'message' => $enroll->status,
+            'similarity' => $enroll->data[0]->Similarity,
+            'faceId' => $enroll->data[0]->Face->FaceId,
+            'student_id' => $user->id,
+            'student_name' => $user->sname . ' ' . $user->fname . ' ' . $user->mname,
+            'school_id' => $user->school_id,
+            'department' => $user->department,
+            'is_disabled' => $user->is_disabled
+        ]);
+    }
+
+
+    public function takeAttendance(Request $request)
+    {
+        
     }
 }

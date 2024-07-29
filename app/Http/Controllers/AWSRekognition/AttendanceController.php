@@ -67,17 +67,21 @@ class AttendanceController extends Controller
 
     public function checkAttendance(Request $request)
     {
-        $this->validate($request, [
-            'image' => 'required|image',
+        $validator = Validator::make($request->all(), [
+            'image' => ['required', new Base64Image]
         ]);
 
-        $image = file_get_contents($request->file('image')->getRealPath());
+        if ($validator->fails()) responseError('The image format is invalid');
+
+        // $image = file_get_contents($request->file('image')->getRealPath());
+        $base64Data = preg_replace('/^data:image\/\w+;base64,/', '', $request->input('image'));
+        $image = base64_decode($base64Data);
         $result = $this->rekognition->searchFacesByImage($image, $this->collection);
 
         if (!empty($result['FaceMatches'])) {
-            return response()->json(['status' => 'Present', 'data' => $result['FaceMatches']]);
+            return response()->json(['status' => 'Match found', 'data' => $result['FaceMatches']]);
         } else {
-            return response()->json(['status' => 'Absent']);
+            return response()->json(['status' => 'Match not found']);
         }
     }
 

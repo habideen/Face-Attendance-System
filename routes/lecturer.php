@@ -35,8 +35,13 @@ Route::prefix('lecturer')->group(function () {
     Route::get('details/{staff_id}', [StaffController::class, 'details']);
   });
 
+  // Route::prefix('students')->group(function () {
+  //   Route::get('/', [StudentController::class, 'index']);
+  //   Route::get('details/{staff_id}', [StudentController::class, 'details']);
+  // });
   Route::prefix('students')->group(function () {
-    Route::get('/', [StudentController::class, 'index']);
-    Route::get('details/{staff_id}', [StudentController::class, 'details']);
+    Route::get('check_face', [AttendanceController::class, 'checkFace']);
+    Route::post('check_face', [AttendanceController::class, 'checkFace']);
   });
+  Route::resource('students', StudentController::class)->except('create', 'store', 'destroy');
 });

@@ -43,9 +43,10 @@
             </style>
             <div class="modal-body">
                 <div class="row fw-bold mb-4 bg-light p-2 pt-3 rounded">
-                    <div class="col-md-4 mb-2">CSC501</div>
-                    <div class="col-md-4 mb-2">Introduction to Networking</div>
-                    <div class="col-md-4 mb-2">Total classes: 21</div>
+                    <div class="col-sm-6 col-md-2 mb-2">{{ $course->code }}</div>
+                    <div class="col-sm-6 col-md-5 mb-2">{{ $course->title }}</div>
+                    <div class="col-sm-6 col-md-2 mb-2">{{ Session::get('academic_session') }}</div>
+                    <div class="col-sm-6 col-md-3 mb-2">Total classes: 21</div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-sm-4 col-md-3 col-lg-2 text-center">
@@ -61,24 +62,30 @@
                             <tbody>
                                 <tr>
                                     <td>Name:</td>
-                                    <td>AJANLEKOKO Ojetunji Fiditi</td>
+                                    <td id="checked_name">AJANLEKOKO Ojetunji Fiditi</td>
                                 </tr>
                                 <tr>
                                     <td>Matric No.:</td>
-                                    <td>CSS/1954/###</td>
+                                    <td id="checked_school_id">CSS/1954/###</td>
                                 </tr>
                                 <tr>
                                     <td>Department:</td>
-                                    <td>Computer Science</td>
+                                    <td id="checked_department">Computer Science</td>
                                 </tr>
                                 <tr>
                                     <td>Status:</td>
-                                    <td>Student Disabled</td>
+                                    <td id="checked_is_disabled">Student Disabled</td>
                                 </tr>
                                 <tr>
-                                    <td><x-form.button
-                                            defaultText="<i class='mdi mdi-calendar-check me-2'></i> Mark Attendance"
-                                            class="btn-lg btn-primary" /></td>
+                                    <td>
+                                        <form action="" method="post">
+                                            <input type="text" name="student_id" id="checked_student_id">
+                                            {{-- <input type="text" name="session_course_id" value="{{ $sessionCourseId }}"> --}}
+                                            <x-form.button
+                                                defaultText="<i class='mdi mdi-calendar-check me-2'></i> Mark Attendance"
+                                                class="btn-lg btn-primary" />
+                                        </form>
+                                    </td>
                                     <td></td>
                                 </tr>
                             </tbody>
