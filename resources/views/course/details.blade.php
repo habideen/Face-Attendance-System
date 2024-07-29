@@ -222,4 +222,10 @@
             });
         </script>
     @endif
+    @if (Session::get('user_path') == 'lecturer')
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
+        <script src="/test/script_attendance.js"></script>
+        <script></script>
+    @endif
 @endsection

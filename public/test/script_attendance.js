@@ -1,5 +1,6 @@
 let stream;
 let detectionInterval;
+var faceResult;
 
 async function setupCamera() {
     const video = document.getElementById("video");
@@ -65,16 +66,13 @@ async function detectFaceLive() {
 async function autoCaptureFace() {
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");
-    const resultImg = document.getElementById("result");
-    const image_value = document.getElementById("image_value");
 
     const context = canvas.getContext("2d");
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     const detection = await detectFace(canvas);
     if (detection) {
         const croppedFace = cropFace(canvas, detection);
-        resultImg.src = croppedFace;
-        image_value.value = croppedFace;
+        faceResult = croppedFace;
         stopCamera();
     } else {
         alert("No face detected!");
@@ -115,8 +113,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const captureButton = document.getElementById("capture");
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");
-    const resultImg = document.getElementById("result");
-    const image_value = document.getElementById("image_value");
 
     startButton.addEventListener("click", setupCamera);
     stopButton.addEventListener("click", stopCamera);
@@ -127,8 +123,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const detection = await detectFace(canvas);
         if (detection) {
             const croppedFace = cropFace(canvas, detection);
-            resultImg.src = croppedFace;
-            image_value.value = croppedFace;
+            faceResult = croppedFace;
             stopCamera();
         } else {
             alert("No face detected!");

@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="text-center mt-5">
-                        <x-form.button defaultText="Disable" class="btn-lg btn-danger" />
+                        <x-form.button defaultText="{{ !$user->is_disabled ? 'Disable' : 'Enable' }}" class="btn-lg btn-danger" />
                     </div>
                 </form>
             </div>

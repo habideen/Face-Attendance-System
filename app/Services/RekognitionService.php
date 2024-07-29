@@ -27,8 +27,7 @@ class RekognitionService
       'Image' => [
         'Bytes' => $image,
       ],
-      'ExternalImageId' => '1234-bade', //uniqid(),
-      'FaceId' => 'ABC-Bravy',
+      'ExternalImageId' => uniqid(),
       'DetectionAttributes' => ['ALL'],
     ]);
     

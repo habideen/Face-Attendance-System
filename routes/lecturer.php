@@ -26,11 +26,10 @@ Route::prefix('lecturer')->group(function () {
   Route::get('password', [PasswordController::class, 'index']);
 
   Route::prefix('courses')->group(function () {
-    Route::get('/', [CoursesController::class, 'index']);
-    Route::get('details/{course_code}', [CoursesController::class, 'details']);
     Route::get('attendance/{id}', [AttendanceController::class, 'index']);
     Route::get('attendance/summary/{course_code}', [AttendanceController::class, 'summary']);
   });
+  Route::resource('courses', CoursesController::class)->except('create', 'store', 'edit', 'update', 'destroy');
 
   Route::prefix('staff')->group(function () {
     Route::get('details/{staff_id}', [StaffController::class, 'details']);
