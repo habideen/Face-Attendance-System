@@ -94,6 +94,7 @@ class CoursesController extends Controller
             ->join('courses', 'courses.id', '=', 'session_courses.course_id')
             ->join('users', 'users.id', '=', 'course_lecturers.user_id')
             ->where('session_courses.session', Session::get('academic_session'))
+            ->where('session_courses.course_id', $id)
             ->get();
 
         return view('course.details')->with(([

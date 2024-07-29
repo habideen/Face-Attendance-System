@@ -44,6 +44,16 @@ class ManageCourseConroller extends Controller
 
         if (!$course) responseError('The course does not exist!');
 
+        $courseLecturers = CourseLecturer::select(
+            'course_lecturers.user_id'
+        )
+            ->join('session_courses', 'session_courses.id', '=', 'course_lecturers.session_course_id')
+            ->join('courses', 'courses.id', '=', 'session_courses.course_id')
+            ->where('session_courses.session', Session::get('academic_session'))
+            ->where('courses.id', $id)
+            ->get()->pluck('user_id');
+
+
         $lecturers = User::select(
             'users.id',
             'users.school_id',
@@ -55,6 +65,7 @@ class ManageCourseConroller extends Controller
         )
             ->join('departments', 'departments.id', '=', 'users.department_id')
             ->whereNotNull('is_lecturer')
+            ->whereNotIn('users.id', $courseLecturers)
             ->get();
 
         return view('course.add_lecturer')->with([
