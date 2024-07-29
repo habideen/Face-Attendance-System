@@ -7,8 +7,8 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\TwoFAController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\test\AttendanceController;
-use App\Http\Controllers\test\FaceDetectorController;
+use App\Http\Controllers\AWSRekognition\AttendanceController;
+use App\Http\Controllers\AWSRekognition\FaceDetectorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::prefix('test')->group(function () {
-  Route::get('/', [AttendanceController::class, 'enrolCheck']);
+  Route::get('/enroll', [AttendanceController::class, 'enrolCheck']);
   Route::get('/collections', [AttendanceController::class, 'collections']);
   Route::post('/enroll', [AttendanceController::class, 'enroll']);
   Route::post('/check-attendance', [AttendanceController::class, 'checkAttendance']);

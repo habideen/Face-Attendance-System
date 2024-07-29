@@ -13,9 +13,9 @@
         <h2 class="my-4">Face Recognition Attendance System</h2>
 
         <div>
-            <a href="/" class="btn btn-primary mb-3">Enroll & Check Attendance</a> |
-            <a href="/collections" class="btn btn-primary mb-3">View Collections</a> |
-            <a href="/capture_face" class="btn btn-primary mb-3">Capture Face</a>
+            <a href="/test/enroll" class="btn btn-primary mb-3">Enroll & Check Attendance</a> |
+            <a href="/test/collections" class="btn btn-primary mb-3">View Collections</a> |
+            <a href="/test/capture_face" class="btn btn-primary mb-3">Capture Face</a>
         </div>
 
         @if (session('enrollStatus'))
@@ -31,7 +31,7 @@
         <div class="card mb-4">
             <div class="card-header">Enroll Face</div>
             <div class="card-body">
-                <form action="{{ url('/enroll') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('/test/enroll') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="enrollImage">Upload Image</label>
@@ -55,7 +55,7 @@
         <div class="card">
             <div class="card-header">Check Attendance</div>
             <div class="card-body">
-                <form action="{{ url('/check-attendance') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('/test/check-attendance') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="attendanceImage">Upload Image</label>

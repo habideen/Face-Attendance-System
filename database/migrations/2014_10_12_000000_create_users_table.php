@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('is_adviser', 1)->nullable();
             $table->string('is_lecturer', 1)->nullable();
             $table->string('is_disabled', 1)->nullable();
-            $table->string('face_enrolled', 1)->nullable();
+            $table->uuid('face_enrolled', 1)->nullable();
             $table->string('admission_session');
             $table->timestamps();
 

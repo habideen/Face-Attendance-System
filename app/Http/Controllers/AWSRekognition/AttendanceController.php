@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\test;
+namespace App\Http\Controllers\AWSRekognition;
 
 use App\Http\Controllers\Controller;
+use App\Rules\Base64Image;
 use Illuminate\Http\Request;
 use App\Services\RekognitionService;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class AttendanceController extends Controller
 {
     protected $rekognition;
+    protected string $collection = 'attendance_collection';
 
     public function __construct(RekognitionService $rekognition)
     {
@@ -42,15 +45,18 @@ class AttendanceController extends Controller
 
     public function enroll(Request $request)
     {
-        $this->validate($request, [
-            'image' => 'required|image',
+        $validator = Validator::make($request->all(), [
+            'image' => ['required', new Base64Image]
         ]);
 
-        $image = file_get_contents($request->file('image')->getRealPath());
-        $collectionId = 'attendance_collection';
+        if ($validator->fails()) responseError('The image format is invalid');
 
-        // $this->rekognition->createCollection($collectionId); // create new collection
-        $faceId = $this->rekognition->indexFaces($image, $collectionId);
+        // $image = file_get_contents($request->file('image')->getRealPath());
+        $base64Data = preg_replace('/^data:image\/\w+;base64,/', '', $request->input('image'));
+        $image = base64_decode($base64Data);
+
+        $this->rekognition->createCollection($this->collection); // create new collection
+        $faceId = $this->rekognition->indexFaces($image, $this->collection);
 
         if ($faceId !== null) {
             return response()->json(['faceId' => $faceId]);
@@ -66,9 +72,7 @@ class AttendanceController extends Controller
         ]);
 
         $image = file_get_contents($request->file('image')->getRealPath());
-        $collectionId = 'attendance_collection';
-
-        $result = $this->rekognition->searchFacesByImage($image, $collectionId);
+        $result = $this->rekognition->searchFacesByImage($image, $this->collection);
 
         if (!empty($result['FaceMatches'])) {
             return response()->json(['status' => 'Present', 'data' => $result['FaceMatches']]);
@@ -79,10 +83,9 @@ class AttendanceController extends Controller
 
     public function deleteFace(Request $request)
     {
-        $collectionId = $request->collection;
         $faceIds = $request->face_id;
 
-        $result = $this->rekognition->deleteFaces($collectionId, [$faceIds]);
+        $result = $this->rekognition->deleteFaces($this->collection, [$faceIds]);
 
         // Handle the result accordingly
         if ($result['@metadata']['statusCode'] == 200) {

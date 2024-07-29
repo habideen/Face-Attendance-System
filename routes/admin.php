@@ -55,6 +55,7 @@ Route::prefix('admin')->group(function () {
     Route::get('load_student', [LoadStudentController::class, 'index']);
     Route::post('load_student', [LoadStudentController::class, 'load']);
     Route::post('{id}/disable', [StudentController::class, 'disable']);
+    Route::post('enroll/{student_id}', [AttendanceController::class, 'enroll']);
   });
   Route::resource('students', StudentController::class);
 });

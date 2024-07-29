@@ -27,10 +27,11 @@ class RekognitionService
       'Image' => [
         'Bytes' => $image,
       ],
-      'ExternalImageId' => uniqid(),
+      'ExternalImageId' => '1234-bade', //uniqid(),
+      'FaceId' => 'ABC-Bravy',
       'DetectionAttributes' => ['ALL'],
     ]);
-
+    
     if (!empty($result['FaceRecords'])) {
       return $result['FaceRecords'][0]['Face']['FaceId'];
     } else {
@@ -52,6 +53,14 @@ class RekognitionService
 
   public function createCollection($collectionId)
   {
+    $collections = $this->rekognition->listCollections();
+
+    // Check if the collectionId is already in the list
+    if (in_array($collectionId, $collections['CollectionIds'])) {
+      return;
+    }
+
+    // If it does not exist, create the collection
     return $this->rekognition->createCollection([
       'CollectionId' => $collectionId,
     ]);

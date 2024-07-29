@@ -14,9 +14,9 @@
         <h1 class="my-4">Collection List</h1>
 
         <div>
-            <a href="/" class="btn btn-primary mb-3">Enroll & Check Attendance</a> |
-            <a href="/collections" class="btn btn-primary mb-3">View Collections</a> |
-            <a href="/capture_face" class="btn btn-primary mb-3">Capture Face</a>
+            <a href="/test/enroll" class="btn btn-primary mb-3">Enroll & Check Attendance</a> |
+            <a href="/test/collections" class="btn btn-primary mb-3">View Collections</a> |
+            <a href="/test/capture_face" class="btn btn-primary mb-3">Capture Face</a>
         </div>
 
         <ul class="list-group">
@@ -24,7 +24,7 @@
                 <li class="list-group-item">
                     <div>
                         <strong>Collection ID:</strong> {{ $collection['CollectionId'] }}
-                        <a href="/collections/delete/{{ $collection['CollectionId'] }}">Delete</a>
+                        <a href="/test/collections/delete/{{ $collection['CollectionId'] }}">Delete</a>
                     </div>
                     <div>
                         <strong>Number of Faces:</strong> {{ $collection['FaceCount'] }}
@@ -34,7 +34,7 @@
                         <ol class="">
                             @foreach ($collection['Faces'] as $face)
                                 <li>{{ $face['FaceId'] }} <a
-                                        href="/collections/faces/delete?collection={{ $collection['CollectionId'] }}&face_id={{ $face['FaceId'] }}">Delete</a>
+                                        href="/test/collections/faces/delete?collection={{ $collection['CollectionId'] }}&face_id={{ $face['FaceId'] }}">Delete</a>
                                 </li>
                             @endforeach
                         </ol>

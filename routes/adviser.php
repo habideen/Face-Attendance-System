@@ -36,5 +36,8 @@ Route::prefix('adviser')->group(function () {
     Route::get('details/{staff_id}', [StaffController::class, 'details']);
   });
 
+  Route::prefix('students')->group(function () {
+    Route::post('enroll/{student_id}', [AttendanceController::class, 'enroll']);
+  });
   Route::resource('students', StudentController::class)->except('create', 'store', 'destroy');
 });

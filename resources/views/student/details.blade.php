@@ -62,6 +62,11 @@
                                         <td>Department:</td>
                                         <td>{{ $user->department }}</td>
                                     </tr>
+                                    <tr>
+                                        <td>Face registered:</td>
+                                        <td>{!! $user->face_enrolled ? '<span class="text-success">Yes</span>' : '<span class="text-danger">No</span>' !!} <span class="text-muted">(It must be
+                                                registered for attendance)</span></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -111,7 +116,7 @@
                             @endif
                             @if (Auth::user()->is_adviser)
                                 <button class="btn btn-success me-4 mb-3" data-bs-toggle="modal"
-                                    data-bs-target="#enrolFaceModal">Enrol Face</button>
+                                    data-bs-target="#enrolFaceModal">{!! !$user->face_enrolled ? 'Enrol Face' : 'Face already enrolled' !!}</button>
                             @endif
                         </div>
                     </div>
@@ -159,5 +164,13 @@
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
         <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
         <script src="/test/script.js"></script>
+        <script>
+            $('#enrol_form').on('submit', function(event) {
+                if ($('#image_value').val() == '') {
+                    alert('Please capture a face!');
+                    event.preventDefault();
+                }
+            });
+        </script>
     @endif
 @endsection

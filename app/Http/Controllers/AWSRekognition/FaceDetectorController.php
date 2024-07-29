@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\test;
+namespace App\Http\Controllers\AWSRekognition;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

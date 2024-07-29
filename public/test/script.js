@@ -66,6 +66,7 @@ async function autoCaptureFace() {
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");
     const resultImg = document.getElementById("result");
+    const image_value = document.getElementById("image_value");
 
     const context = canvas.getContext("2d");
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -73,6 +74,7 @@ async function autoCaptureFace() {
     if (detection) {
         const croppedFace = cropFace(canvas, detection);
         resultImg.src = croppedFace;
+        image_value.value = croppedFace;
         stopCamera();
     } else {
         alert("No face detected!");
@@ -114,6 +116,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");
     const resultImg = document.getElementById("result");
+    const image_value = document.getElementById("image_value");
 
     startButton.addEventListener("click", setupCamera);
     stopButton.addEventListener("click", stopCamera);
@@ -125,6 +128,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (detection) {
             const croppedFace = cropFace(canvas, detection);
             resultImg.src = croppedFace;
+            image_value.value = croppedFace;
         } else {
             alert("No face detected!");
         }
