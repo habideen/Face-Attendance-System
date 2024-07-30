@@ -33,7 +33,7 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = User::select(
             'users.id',
@@ -46,8 +46,28 @@ class StudentController extends Controller
             'departments.department'
         )
             ->join('departments', 'departments.id', '=', 'users.department_id')
-            ->whereNotNull('is_student')
-            ->get();
+            ->whereNotNull('is_student');
+
+        if ($request->has('school_id') && $request->school_id) {
+            $users = $users->where('users.school_id', $request->school_id);
+        }
+        if ($request->has('department_id') && $request->department_id) {
+            $users = $users->where('users.department_id', $request->department_id);
+        }
+        if ($request->has('admission_session') && $request->admission_session) {
+            $users = $users->where('users.admission_session', $request->admission_session);
+        }
+        if ($request->has('enrolment') && $request->enrolment) {
+            if ($request->enrolment == 'Face enrolled' || $request->enrolment == 'Face not enrolled') {
+                if ($request->enrolment == 'Face enrolled') {
+                    $users = $users->whereNotNull('users.admission_session');
+                } else {
+                    $users = $users->whereNull('users.admission_session');
+                }
+            }
+        }
+
+        $users = $users->get();
 
         return view('student.list')->with([
             'users' => $users

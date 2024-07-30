@@ -88,7 +88,7 @@
                             <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                                 <thead>
                                     <tr>
-                                        <th>Taken By</th>
+                                        <th>Name</th>
                                         <th>Created At</th>
                                         @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
                                             <th>Action</th>
@@ -131,14 +131,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>25 May, 2024</td>
-                                        <td>11:51 PM</td>
-                                        <td><a href="/{{ Session::get('user_path') }}/staff/details/98aa7373-4167-4d69-bf4e-05383774968e"
-                                                target="_blank">Prof AKINRINDE Olakilekun Ajanlekoko</a></td>
-                                        <td><a href="/{{ Session::get('user_path') }}/courses/attendance/98aa7373-4167-4d69-bf4e-05383774968e"
-                                                class="btn btn-light btn-sm">View attendance</a></td>
-                                    </tr>
+                                    @foreach ($attendances as $attendance)
+                                        <tr>
+                                            <td>{{ date('d M, Y', strtotime($attendance->created_at)) }}</td>
+                                            <td>{{ date('h:i A', strtotime($attendance->created_at)) }}</td>
+                                            <td><a href="/{{ Session::get('user_path') }}/staff/{{ $attendance->lecturer_id }}"
+                                                    target="_blank">{{ $attendance->title . ' ' . $attendance->sname . ' ' . $attendance->fname . ' ' . $attendance->mname }}</a>
+                                            </td>
+                                            <td><a href="/{{ Session::get('user_path') }}/courses/attendance/{{ $attendance->id }}"
+                                                    class="btn btn-light btn-sm">View attendance</a></td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

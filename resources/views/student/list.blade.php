@@ -82,11 +82,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="get">
-                        @csrf
+                    <form action="/{{ Session::get('user_path') }}/students" method="get">
 
-                        <x-form.input name="id" label="Matriculation Number" type="text" required='true'
-                            parentClass="mb-3" placeholder="e.g CSC/1950/001" />
+                        <x-form.input name="school_id" label="Matriculation Number" type="text" parentClass="mb-3"
+                            placeholder="e.g CSC/1950/001" />
+
+                        @csrf
 
                         <x-form.button defaultText="Find Student" />
 
@@ -94,7 +95,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary d-none">Understood</button>
                 </div>
             </div>
         </div>
@@ -113,14 +113,53 @@
                     <form method="get">
                         @csrf
 
-                        <x-form.select name="department" label="Department" required='true' parentClass="mb-4"
-                            optionsType="array" :options="['Computer Science', 'Computer Engineering']" />
+                        <div class="form-group mb-3">
+                            <label for="department_id">Department
+                            </label>
+                            <select name="department_id" id="department_id" class="form-control form-select">
+                                <option value=""></option>
+                                @php
+                                    $departments = departments();
+                                @endphp
+                                @foreach ($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->department }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('department_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                        <x-form.select name="session" label="Session" required='true' parentClass="mb-4" optionsType="array"
-                            :options="['2019/2020', '2020/2021']" />
+                        @php
+                            $startYear = 2015;
+                            $currentYear = date('Y');
+                            $years = [];
+
+                            // Generate academic years in reverse order
+                            for ($year = $currentYear; $year > $startYear; $year--) {
+                                $prevYear = $year - 1;
+                                $years[] = "$prevYear/$year";
+                            }
+                        @endphp
+                        <div class="form-group mb-3">
+                            <label for="session">Session
+                            </label>
+                            <select name="admission_session" id="admission_session" class="form-control form-select">
+                                <option value=""></option>
+                                @foreach ($years as $academicYear)
+                                    <option value="{{ $academicYear }}">{{ $academicYear }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('admission_session')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <x-form.select name="enrolment" label="Enrolment" parentClass="mb-4" optionsType="array"
-                            :options="['All', 'Unenrolled', 'Enrolled']" />
+                            :options="['All', 'Face enrolled', 'Face not enrolled']" />
+
 
                         <x-form.button defaultText="Fetch Records" />
 
@@ -128,7 +167,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary d-none">Understood</button>
                 </div>
             </div>
         </div>

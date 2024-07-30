@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseAttendance;
 use App\Models\CourseLecturer;
 use App\Models\SessionCourse;
 use Illuminate\Database\Eloquent\Model;
@@ -98,6 +99,21 @@ class CoursesController extends Controller
             ->where('session_courses.course_id', $id)
             ->get();
 
+        $attendances = CourseAttendance::select(
+            'users.title',
+            'users.sname',
+            'users.fname',
+            'users.mname',
+            'course_attendances.id',
+            'course_attendances.lecturer_id',
+            'course_attendances.created_at'
+        )
+            ->join('session_courses', 'session_courses.id', '=', 'course_attendances.session_course_id')
+            ->join('users', 'users.id', '=', 'course_attendances.lecturer_id')
+            ->where('session_courses.session', Session::get('academic_session'))
+            ->where('session_courses.course_id', $id)
+            ->get();
+
         $this_lecturer = $courseLecturers->where('id', Auth::user()->id)->first();
         if ($this_lecturer) {
             // used to query when marking attendance
@@ -111,6 +127,7 @@ class CoursesController extends Controller
 
         return view('course.details')->with(([
             'course' => $course,
+            'attendances' => $attendances,
             'courseLecturers' => $courseLecturers,
         ]));
     }

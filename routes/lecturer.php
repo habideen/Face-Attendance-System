@@ -31,14 +31,8 @@ Route::prefix('lecturer')->group(function () {
   });
   Route::resource('courses', CoursesController::class)->except('create', 'store', 'edit', 'update', 'destroy');
 
-  Route::prefix('staff')->group(function () {
-    Route::get('details/{staff_id}', [StaffController::class, 'details']);
-  });
+  Route::get('staff/{id}', [StaffController::class, 'show']);
 
-  // Route::prefix('students')->group(function () {
-  //   Route::get('/', [StudentController::class, 'index']);
-  //   Route::get('details/{staff_id}', [StudentController::class, 'details']);
-  // });
   Route::prefix('students')->group(function () {
     Route::post('check_face', [AttendanceController::class, 'checkFace']);
     Route::post('take_attendance', [AttendanceController::class, 'takeAttendance']);

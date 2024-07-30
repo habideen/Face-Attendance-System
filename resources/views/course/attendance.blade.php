@@ -28,7 +28,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Attendance: 15 May, 2024 3:00 pm</h4>
+                            <h5 class="mb-1">Attendance:
+                                {{ date('d M, Y h:i A', strtotime($attendance->created_at)) }}</h5>
+                            <h6 class="mb-4">Taken by:
+                                {{ $attendance->title . ' ' . $attendance->sname . ' ' . $attendance->fname . ' ' . $attendance->mname }}
+                            </h6>
                             <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                                 <thead>
                                     <tr>
@@ -38,11 +42,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>AJANGBADI Ojelarinaka Ojewole</td>
-                                        <td>CSC/2019/199</td>
-                                        <td>15 May, 2024 3:01 pm</td>
-                                    </tr>
+                                    @foreach ($records as $record)
+                                        <tr>
+                                            <td>{{ $record->sname . ' ' . $record->fname . ' ' . $record->mname }}
+                                            </td>
+                                            <td>{{ $record->school_id }}</td>
+                                            <td>{{ date('d M, Y h:i a', strtotime($record->created_at)) }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

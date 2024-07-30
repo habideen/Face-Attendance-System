@@ -19,9 +19,36 @@ use Illuminate\Support\Str;
 
 class AttendanceController extends Controller
 {
-    public function index()
+    public function index(string $id)
     {
-        return view('course.attendance');
+        $attendance = CourseAttendance::select(
+            'users.title',
+            'users.sname',
+            'users.fname',
+            'users.mname',
+            'course_attendances.lecturer_id',
+            'course_attendances.created_at'
+        )
+            ->join('users', 'users.id', '=', 'course_attendances.lecturer_id')
+            ->where('course_attendances.id', $id)
+            ->first();
+
+        $records = IndividualAttendance::select(
+            'users.title',
+            'users.sname',
+            'users.fname',
+            'users.mname',
+            'users.school_id',
+            'individual_attendances.created_at'
+        )
+            ->join('users', 'users.id', '=', 'individual_attendances.user_id')
+            ->where('individual_attendances.course_attendance_id', $id)
+            ->get();
+
+        return view('course.attendance')->with([
+            'attendance' => $attendance,
+            'records' => $records
+        ]);
     } //index
 
 
@@ -136,6 +163,15 @@ class AttendanceController extends Controller
     }
 
 
+    private function increaseAttendance()
+    {
+        return CourseAttendance::where('session_course_id', Session::get('session_course_id'))
+            ->where('lecturer_id', Session::get('this_lecturer'))
+            ->whereDate('created_at', now())
+            ->increment('attendance_count', 1);
+    }
+
+
     private function individualAttendance()
     {
         $record = CourseAttendance::select('id')
@@ -210,7 +246,8 @@ class AttendanceController extends Controller
             $save->save();
         }
 
-        if (!$save) responseError('System error! We could not mark this attendance. Please try again.');
+        if (!$save || !$this->increaseAttendance())
+            responseError('System error! We could not mark this attendance. Please try again.');
 
         return response()->json([
             'status' => 'successful',

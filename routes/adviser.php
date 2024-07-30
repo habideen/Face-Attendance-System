@@ -31,13 +31,12 @@ Route::prefix('adviser')->group(function () {
   });
   Route::resource('courses', CoursesController::class)->except('create', 'store', 'edit', 'update', 'destroy');
 
-  Route::prefix('staff')->group(function () {
-    Route::get('details/{staff_id}', [StaffController::class, 'details']);
-  });
+  Route::get('staff/{id}', [StaffController::class, 'show']);
 
   Route::prefix('students')->group(function () {
     Route::post('enroll/{student_id}', [AttendanceController::class, 'enroll']);
     Route::post('check_face', [AttendanceController::class, 'checkFace']);
+    Route::post('take_attendance', [AttendanceController::class, 'takeAttendance']);
   });
   Route::resource('students', StudentController::class)->except('create', 'store', 'destroy');
 });
