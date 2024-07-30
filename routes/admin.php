@@ -29,6 +29,7 @@ Route::prefix('admin')->group(function () {
   Route::get('/', [ProfileController::class, 'index']);
 
   Route::get('profile', [ProfileController::class, 'index']);
+  Route::patch('profile', [ProfileController::class, 'update']);
   Route::get('password', [PasswordController::class, 'index']);
 
   Route::prefix('courses')->group(function () {
