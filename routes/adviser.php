@@ -25,6 +25,7 @@ Route::prefix('adviser')->group(function () {
   Route::get('profile', [ProfileController::class, 'index']);
   Route::patch('profile', [ProfileController::class, 'update']);
   Route::get('password', [PasswordController::class, 'index']);
+  Route::post('password', [PasswordController::class, 'change']);
 
   Route::prefix('courses')->group(function () {
     Route::get('attendance/{id}', [AttendanceController::class, 'index']);
