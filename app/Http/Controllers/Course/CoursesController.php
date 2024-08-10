@@ -139,8 +139,19 @@ class CoursesController extends Controller
             Session::put('this_lecturer', null);
         }
 
+        $clases_taken = CourseAttendance::select(
+            DB::raw("COUNT(course_attendances.id) AS num")
+        )
+            ->join('session_courses', 'session_courses.id', '=', 'course_attendances.session_course_id')
+            ->join('courses', 'courses.id', '=', 'session_courses.course_id')
+            ->where('session_courses.session', Session::get('academic_session'))
+            ->where('courses.code', $course->code)
+            ->first()
+            ->num;
+
         return view('course.details')->with(([
             'course' => $course,
+            'clases_taken' => $clases_taken,
             'attendances' => $attendances,
             'courseLecturers' => $courseLecturers,
         ]));

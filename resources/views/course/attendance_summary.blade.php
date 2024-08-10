@@ -29,9 +29,9 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row fw-bold mb-4 bg-light p-2 pt-3 rounded">
-                                <div class="col-md-4 mb-2">CSC501</div>
-                                <div class="col-md-4 mb-2">Introduction to Networking</div>
-                                <div class="col-md-4 mb-2">Total classes: 21</div>
+                                <div class="col-md-4 mb-2">{{ $course->code }}</div>
+                                <div class="col-md-4 mb-2">{{ $course->title }}</div>
+                                <div class="col-md-4 mb-2">Total classes: {{ $clases_taken }}</div>
                             </div>
                             <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                                 <thead>
@@ -42,16 +42,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>AJANGBADI Ojelarinaka Ojewole</td>
-                                        <td>CSC/2019/199</td>
-                                        <td>15</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ADEKIGBE Olode Falola</td>
-                                        <td>CSC/2019/203</td>
-                                        <td>7</td>
-                                    </tr>
+                                    @foreach ($students as $student)
+                                        <tr>
+                                            <td>{{ $student->sname }} {{ $student->fname }} {{ $student->mname }}</td>
+                                            <td>{{ $student->school_id }}</td>
+                                            <td>{{ $student->classes_taken }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

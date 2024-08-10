@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\AWSRekognition\AttendanceController as AWSRekognitionAttendanceController;
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\CourseAttendance;
 use App\Models\IndividualAttendance;
 use App\Models\SessionCourse;
@@ -12,6 +13,7 @@ use App\Rules\Base64Image;
 use App\Services\RekognitionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -52,9 +54,53 @@ class AttendanceController extends Controller
     } //index
 
 
-    public function summary()
+    public function summary(string $course_code)
     {
-        return view('course.attendance_summary');
+        $course = Course::select(
+            'id',
+            'code',
+            'title'
+        )->where('code', $course_code)->first();
+        if (!$course) responseError('The course does not exist!');
+
+        $clases_taken = CourseAttendance::select(
+            DB::raw("COUNT(course_attendances.id) AS num")
+        )
+            ->join('session_courses', 'session_courses.id', '=', 'course_attendances.session_course_id')
+            ->join('courses', 'courses.id', '=', 'session_courses.course_id')
+            ->where('session_courses.session', Session::get('academic_session'))
+            ->where('courses.code', $course_code)
+            ->first()
+            ->num;
+
+        $students = IndividualAttendance::select(
+            'sname',
+            'fname',
+            'mname',
+            'courses.code',
+            'school_id',
+            DB::raw("COUNT(individual_attendances.id) AS classes_taken")
+        )
+            ->join('users', 'users.id', '=', 'individual_attendances.user_id')
+            ->join('course_attendances', 'course_attendances.id', '=', 'individual_attendances.course_attendance_id')
+            ->join('session_courses', 'session_courses.id', '=', 'course_attendances.session_course_id')
+            ->join('courses', 'courses.id', '=', 'session_courses.course_id')
+            ->where('courses.code', $course_code)
+            ->where('session_courses.session', Session::get('academic_session'))
+            ->groupBy(
+                'sname',
+                'fname',
+                'mname',
+                'courses.code',
+                'school_id'
+            )
+            ->get();
+
+        return view('course.attendance_summary')->with([
+            'course' => $course,
+            'students' => $students,
+            'clases_taken' => $clases_taken
+        ]);
     } //summary
 
 
@@ -200,7 +246,8 @@ class AttendanceController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'student_id' => [
-                'required', 'exists:users,id',
+                'required',
+                'exists:users,id',
                 function ($attribute, $value, $fail) {
                     $user = User::select('is_disabled')->where('id', $value)->first();
                     if ($user && $user->is_disabled == 1) {

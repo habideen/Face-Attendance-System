@@ -55,7 +55,7 @@
                                     </tr>
                                     <tr>
                                         <td>Number of Attendance:</td>
-                                        <td></td>
+                                        <td>{{ $clases_taken }}</td>
                                     </tr>
                                     <tr>
                                         <td>Created At:</td>
@@ -157,7 +157,7 @@
                                 <a href="/{{ Session::get('user_path') }}/courses/{{ $course->id }}/edit"
                                     class="btn btn-primary me-4">Edit Course</a>
                             @endif
-                            <a href="/{{ Session::get('user_path') }}/courses/attendance/summary/CSC501"
+                            <a href="/{{ Session::get('user_path') }}/courses/attendance/summary/{{ $course->code }}"
                                 class="btn btn-success me-4">View
                                 Attendance Summary</a>
                             @if (Session::get('session_course_id') && Session::get('this_lecturer'))
