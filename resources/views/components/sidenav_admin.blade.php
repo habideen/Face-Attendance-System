@@ -7,7 +7,7 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled mt-2" id="side-menu">
                 <li>
-                    <a href="javascript: void(0)" class="waves-effect">
+                    <a href="/{{Session::get('user_path')}}" class="waves-effect">
                         <i class="bx bx-home-circle"></i>
                         <span key="t-dashboard">Dashboards</span>
                     </a>
