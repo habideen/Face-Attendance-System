@@ -98,7 +98,7 @@ class StudentController extends Controller
         $save = new User();
         $save->id = $id;
         $save->is_student = 1;
-        $save->password = Hash::make(Str::random());
+        $save->password = Hash::make('11111111');
         $save = $this->saveRecord($save, $request);
 
         if (!$save) responseSystemError();
