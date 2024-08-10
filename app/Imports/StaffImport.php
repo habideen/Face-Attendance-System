@@ -45,7 +45,7 @@ class StaffImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imple
         $phone_1 = $row['phone_1'] ? $row['phone_1'] : null;
         $phone_2 = $row['phone_2'] ? $row['phone_2'] : null;
         $email = strtolower($row['email']);
-        $password = Hash::make(Str::random());
+        $password = Hash::make('11111111');
         $is_student = null;
         $is_admin = $row['is_admin'] ? 1 : null;
         $is_adviser = $row['is_adviser'] ? 1 : null;

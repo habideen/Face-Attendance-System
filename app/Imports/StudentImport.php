@@ -39,7 +39,7 @@ class StudentImport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder imp
         $phone_1 = $row['phone_1'] ? $row['phone_1'] : null;
         $phone_2 = $row['phone_2'] ? $row['phone_2'] : null;
         $email = strtolower($row['email']);
-        $password = Hash::make(Str::random());
+        $password = Hash::make('11111111');
         $is_student = 1;
         $admission_session = $row['admission_session'];
 
