@@ -46,7 +46,7 @@
                                             <tr>
                                                 <td>{{ $course->code }}</td>
                                                 <td>{{ $course->title }}</td>
-                                                <td></td>
+                                                <td>{{ $course->classs_taken > 0 ? $course->classs_taken : '' }}</td>
                                                 <td><a href="/{{ Session::get('user_path') }}/courses/{{ $course->id }}"
                                                         class="btn btn-light btn-sm">View</a></td>
                                             </tr>
