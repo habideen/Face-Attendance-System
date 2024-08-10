@@ -10,6 +10,7 @@ use App\Models\SessionCourse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -40,7 +41,20 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        $courses = Course::select('id', 'code', 'title')->get();
+        $courses = Course::select(
+            'courses.id',
+            'courses.code',
+            'courses.title',
+            DB::raw("COUNT(course_attendances.id) AS classs_taken")
+        )
+            ->leftJoin('session_courses', 'session_courses.course_id', '=', 'courses.id')
+            ->leftJoin('course_attendances', 'course_attendances.session_course_id', '=', 'session_courses.id')
+            ->groupBy(
+                'courses.id',
+                'courses.code',
+                'courses.title',
+            )
+            ->get();
 
         return view('course.list')->with([
             'courses' => $courses

@@ -43,10 +43,9 @@
             </style>
             <div class="modal-body">
                 <div class="row fw-bold mb-4 bg-light p-2 pt-3 rounded">
-                    <div class="col-sm-6 col-md-2 mb-2">{{ $course->code }}</div>
-                    <div class="col-sm-6 col-md-5 mb-2">{{ $course->title }}</div>
-                    <div class="col-sm-6 col-md-2 mb-2">{{ Session::get('academic_session') }}</div>
-                    <div class="col-sm-6 col-md-3 mb-2">Total classes: 21</div>
+                    <div class="col-sm-6 col-md-3 mb-2">{{ $course->code }}</div>
+                    <div class="col-sm-6 col-md-6 mb-2">{{ $course->title }}</div>
+                    <div class="col-sm-6 col-md-3 mb-2">{{ Session::get('academic_session') }}</div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-sm-4 col-md-3 col-lg-2 text-center">
