@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -13,7 +15,26 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('profile_settings.profile');
+        $total_staff = User::select(DB::raw('COUNT(id) AS num'))->whereNull('is_student')->first()->num;
+
+        $total_student = User::select(DB::raw('COUNT(id) AS num'))->whereNotNull('is_student');
+        if (!Auth::user()->is_admin) {
+            $total_student = $total_student->where('department_id', Auth::user()->department_id);
+        }
+        $total_student = $total_student->where('admission_session', Session::get('academic_session'))->first()->num;
+
+        $myDepartment = User::select(
+            'departments.department'
+        )
+            ->join('departments', 'departments.id', '=', 'users.department_id')
+            ->where('users.id', Auth::user()->id)
+            ->first();
+
+        return view('staff.dashboard')->with([
+            'total_staff' => $total_staff,
+            'total_student' => $total_student,
+            'myDepartment' => $myDepartment->department
+        ]);
     } //index
 
 
