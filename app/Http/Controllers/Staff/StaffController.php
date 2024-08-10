@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseAttendance;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class StaffController extends Controller
@@ -80,7 +83,7 @@ class StaffController extends Controller
 
         $save = new User;
         $save->id = $id;
-        $save->password = Hash::make(Str::random());
+        $save->password = Hash::make('11111111');
         $save = $this->saveRecord($save, $request);
 
         if (!$save) responseSystemError();
@@ -100,8 +103,27 @@ class StaffController extends Controller
 
         if (!$user) responseError('The record does not exist!');
 
+        $attendances = CourseAttendance::select(
+            'courses.id AS course_id',
+            'courses.code',
+            'courses.title',
+            DB::raw("COUNT(course_attendances.id) AS classs_taken")
+        )
+            ->join('session_courses', 'session_courses.id', '=', 'course_attendances.session_course_id')
+            ->join('courses', 'courses.id', '=', 'session_courses.course_id')
+            ->join('users', 'users.id', '=', 'course_attendances.lecturer_id')
+            ->groupBy(
+                'courses.id',
+                'courses.code',
+                'courses.title',
+            )
+            ->where('session_courses.session', Session::get('academic_session'))
+            ->where('course_attendances.lecturer_id', $user->id)
+            ->get();
+
         return view('staff.details')->with([
             'user' => $user,
+            'attendances' => $attendances,
             'departments' => departments()
         ]);
     }
