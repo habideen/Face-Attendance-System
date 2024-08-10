@@ -99,21 +99,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>CSC 501</td>
-                                            <td>Computer Appreciation</td>
-                                            <td>17</td>
-                                            <td>
-                                                @if (Session::get('user_path') == 'admin' || Session::get('user_path') == 'super-admin')
-                                                    <button class="btn btn-light btn-sm" data-bs-toggle="modal"
-                                                        data-bs-target="#disableModal">Disable</button>
-                                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteCourseModal">Delete</button>
-                                                @endif
-                                                <a href="/{{ Session::get('user_path') }}/courses/details/98aa7373-4167-4d69-bf4e-05383774968e?data_table_search=Prof AKINRINDE Olakilekun Ajanlekoko"
-                                                    class="btn btn-primary btn-sm">Attendance</a>
-                                            </td>
-                                        </tr>
+                                        @foreach ($attendances as $attendance)
+                                            <tr>
+                                                <td>{{ $attendance->code }}</td>
+                                                <td>{{ $attendance->title }}</td>
+                                                <td>{{ $attendance->classs_taken }}</td>
+                                                <td>
+                                                    <a href="/{{ Session::get('user_path') }}/courses/{{ $attendance->course_id }}"
+                                                        class="btn btn-light btn-sm">Attendance</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
