@@ -47,8 +47,15 @@ class LoginController extends Controller
             Session::put('user_path', 'lecturer');
         } elseif (Auth::user()->is_student) {
             Session::put('user_path', 'student');
+
+            (new LogoutController)->clearAuth($request);
+
+            return redirect()->back()->with([
+                'status' => 'failed',
+                'message' => 'You are not allowed in here.'
+            ]);
         }
 
-        return redirect()->to(Session::get('user_path'));
+        return redirect()->to('/' . Session::get('user_path'));
     }
 }
